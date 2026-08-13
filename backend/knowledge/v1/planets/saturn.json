@@ -1,0 +1,45 @@
+{
+  "planet": "Saturn",
+  "symbol": "♄",
+  "element": "Air",
+  "quality": "Cardinal/Fixed",
+  "rules": ["Capricorn", "Aquarius"],
+  "exaltation": "Libra",
+  "debilitation": "Aries",
+  "moolatrikona": "Aquarius",
+  "natural_benefic": false,
+  "karakatwa": ["karma", "discipline", "delays", "hard work", "longevity", "servants", "masses", "old age", "justice"],
+  "significations": {
+    "body": "bones, teeth, knees, skin, nervous system, large intestine",
+    "profession": "law, mining, engineering, agriculture, construction, politics",
+    "relationships": "servants, laborers, the masses, elderly"
+  },
+  "in_signs": {
+    "Aries": { "strength": "debilitated", "statements": ["Discipline conflicts with impulsiveness; frustration and delays", "Authority figures impose restrictions on ambitions", "Karmic lessons around patience and humility"] },
+    "Taurus": { "strength": "neutral", "statements": ["Disciplined pursuit of material security", "Slow but steady accumulation of wealth", "Karmic lessons around values and possessiveness"] },
+    "Gemini": { "strength": "neutral", "statements": ["Serious and structured approach to communication", "Disciplined learning; mastery through repetition", "Can be overly critical or pessimistic in thought"] },
+    "Cancer": { "strength": "neutral", "statements": ["Emotional restrictions and karmic lessons around home", "Possible difficulties with mother or property", "Slow emotional growth that deepens over time"] },
+    "Leo": { "strength": "neutral", "statements": ["Ego is tested by Saturn's discipline", "Fame and recognition come after significant struggle", "Karmic lessons around pride and authority"] },
+    "Virgo": { "strength": "neutral", "statements": ["Precise, meticulous, and highly disciplined thinking", "Mastery in service, analysis, and craft", "Perfectionism taken to extremes"] },
+    "Libra": { "strength": "exalted", "statements": ["The most just and balanced Saturn", "Discipline through fairness, law, and social harmony", "Karmic rewards come through integrity and partnership"] },
+    "Scorpio": { "strength": "neutral", "statements": ["Intense karmic transformation and deep psychological work", "Discipline through crisis, loss, and rebirth", "Mastery of hidden and occult knowledge"] },
+    "Sagittarius": { "strength": "neutral", "statements": ["Discipline in philosophy, law, and higher learning", "Karmic lessons around beliefs and dogma", "The serious scholar and judge"] },
+    "Capricorn": { "strength": "own", "statements": ["Saturn at its most powerful: disciplined, ambitious, and patient", "Success through relentless hard work and perseverance", "The ultimate builder and achiever"] },
+    "Aquarius": { "strength": "own", "statements": ["Discipline through innovation and social responsibility", "The humanitarian lawmaker; structured reform", "Karmic duty to serve humanity"] },
+    "Pisces": { "strength": "neutral", "statements": ["Spiritual discipline and karmic dissolution", "Lessons around sacrifice and service to the unseen", "The ascetic; liberation through letting go"] }
+  },
+  "in_houses": {
+    "1": ["Serious, reserved, and disciplined personality", "Delays in life but eventual wisdom and maturity", "Longevity with karmic responsibility"],
+    "2": ["Delayed wealth; hard-earned financial growth", "Serious and measured speech", "Frugal with money; may face early financial hardship"],
+    "3": ["Serious and methodical communication", "Karmic bonds with siblings; possible delays or separation", "Disciplined in short travels and learning"],
+    "4": ["Restrictions or karmic lessons around home and property", "Emotional distance in family; possible difficulties with mother", "Property gained slowly but securely"],
+    "5": ["Delays in children or serious approach to creativity", "Disciplined intellect; interest in philosophy", "Romantic life may be restricted or serious"],
+    "6": ["Excellent for discipline in work and service", "Longevity despite illness; strong immune system", "Masterful at defeating enemies through perseverance"],
+    "7": ["Delayed marriage or a significant age gap", "A serious, mature, or karmic partner", "Long-lasting but possibly restrictive relationships"],
+    "8": ["Exceptional longevity", "Gains through inheritance eventually; slow but sure", "Deep karmic connection to death, transformation, and the occult"],
+    "9": ["Serious and disciplined approach to religion and philosophy", "Karmic lessons through the father or guru", "Long, arduous, but ultimately rewarding spiritual path"],
+    "10": ["The hallmark of self-made success through hard work", "Delays early in career, but peak achievement later in life", "Mastery and authority in the chosen profession"],
+    "11": ["Slow accumulation of gains; ultimate financial achievement", "Older, serious, and influential social connections", "Persistent and eventually fulfilled desires"],
+    "12": ["Karmic release and spiritual liberation", "Expenses on spiritual or charitable causes", "Strong possibility of meditation, isolation, or foreign settlement"]
+  }
+}

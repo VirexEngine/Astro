@@ -1,0 +1,124 @@
+{
+  "houses": {
+    "1": {
+      "name": "Tanu Bhava (House of Self)",
+      "significations": ["self", "personality", "appearance", "vitality", "life direction", "beginnings"],
+      "body_part": "head, face, brain",
+      "natural_sign": "Aries",
+      "natural_ruler": "Mars",
+      "type": "kendra",
+      "module": "personality",
+      "description": "The ascendant house. It represents the physical body, personality, and the lens through which you experience life."
+    },
+    "2": {
+      "name": "Dhana Bhava (House of Wealth)",
+      "significations": ["family", "wealth", "speech", "food", "early education", "face", "right eye"],
+      "body_part": "face, mouth, teeth, right eye, tongue",
+      "natural_sign": "Taurus",
+      "natural_ruler": "Venus",
+      "type": "panapara",
+      "module": "wealth",
+      "description": "The house of accumulated wealth, family values, speech, and early childhood environment."
+    },
+    "3": {
+      "name": "Sahaja Bhava (House of Siblings)",
+      "significations": ["siblings", "communication", "courage", "short journeys", "media", "writing", "arms"],
+      "body_part": "arms, hands, shoulders, ears, throat",
+      "natural_sign": "Gemini",
+      "natural_ruler": "Mercury",
+      "type": "apoklima",
+      "module": "communication",
+      "description": "The house of siblings, courage, communication, media, and short-distance travel."
+    },
+    "4": {
+      "name": "Sukha Bhava (House of Happiness)",
+      "significations": ["mother", "home", "property", "vehicles", "happiness", "education", "land"],
+      "body_part": "chest, lungs, heart, breasts",
+      "natural_sign": "Cancer",
+      "natural_ruler": "Moon",
+      "type": "kendra",
+      "module": "family",
+      "description": "The house of domestic happiness, mother, real estate, vehicles, and inner emotional security."
+    },
+    "5": {
+      "name": "Putra Bhava (House of Children)",
+      "significations": ["children", "intelligence", "creativity", "romance", "speculation", "past life merit"],
+      "body_part": "stomach, solar plexus, upper abdomen",
+      "natural_sign": "Leo",
+      "natural_ruler": "Sun",
+      "type": "trikona",
+      "module": "creativity",
+      "description": "The house of intelligence, creativity, children, romantic love, and past-life accumulated merit."
+    },
+    "6": {
+      "name": "Ari Bhava (House of Enemies)",
+      "significations": ["enemies", "debts", "disease", "service", "competition", "daily work", "litigation"],
+      "body_part": "intestines, digestive system, hips, lower back",
+      "natural_sign": "Virgo",
+      "natural_ruler": "Mercury",
+      "type": "dusthana",
+      "module": "health",
+      "description": "The house of service, daily work, health challenges, enemies, debts, and the ability to overcome obstacles."
+    },
+    "7": {
+      "name": "Kalatra Bhava (House of Partner)",
+      "significations": ["spouse", "marriage", "partnerships", "business", "open enemies", "contracts"],
+      "body_part": "lower abdomen, kidneys, adrenal glands",
+      "natural_sign": "Libra",
+      "natural_ruler": "Venus",
+      "type": "kendra",
+      "module": "relationships",
+      "description": "The house of marriage, long-term partnerships, business associates, and public dealings."
+    },
+    "8": {
+      "name": "Randhra Bhava (House of Transformation)",
+      "significations": ["death", "transformation", "inheritance", "occult", "research", "longevity", "hidden matters"],
+      "body_part": "genitals, excretory system, anus",
+      "natural_sign": "Scorpio",
+      "natural_ruler": "Mars",
+      "type": "dusthana",
+      "module": "transformation",
+      "description": "The house of sudden events, transformation, hidden matters, inheritance, occult knowledge, and longevity."
+    },
+    "9": {
+      "name": "Dharma Bhava (House of Fortune)",
+      "significations": ["father", "guru", "higher knowledge", "luck", "religion", "long journeys", "philosophy", "law"],
+      "body_part": "thighs, hips, liver",
+      "natural_sign": "Sagittarius",
+      "natural_ruler": "Jupiter",
+      "type": "trikona",
+      "module": "fortune",
+      "description": "The most auspicious house: luck, father, dharma, philosophy, higher education, and long-distance travel."
+    },
+    "10": {
+      "name": "Karma Bhava (House of Career)",
+      "significations": ["career", "status", "government", "authority", "profession", "public life", "achievements"],
+      "body_part": "knees, spine",
+      "natural_sign": "Capricorn",
+      "natural_ruler": "Saturn",
+      "type": "kendra",
+      "module": "career",
+      "description": "The house of career, public reputation, authority, and one's highest achievements in the world."
+    },
+    "11": {
+      "name": "Labha Bhava (House of Gains)",
+      "significations": ["gains", "income", "friendships", "social circle", "elder siblings", "hopes", "aspirations"],
+      "body_part": "calves, ankles, left ear",
+      "natural_sign": "Aquarius",
+      "natural_ruler": "Saturn",
+      "type": "upachaya",
+      "module": "wealth",
+      "description": "The house of gains, income, social networks, elder siblings, and the fulfillment of ambitions."
+    },
+    "12": {
+      "name": "Vyaya Bhava (House of Loss)",
+      "significations": ["expenses", "losses", "isolation", "spirituality", "foreign lands", "liberation", "sleep"],
+      "body_part": "feet, left eye, lymphatic system",
+      "natural_sign": "Pisces",
+      "natural_ruler": "Jupiter",
+      "type": "dusthana",
+      "module": "spirituality",
+      "description": "The house of expenses, losses, foreign travel, isolation, spiritual liberation, and the hidden unconscious."
+    }
+  }
+}

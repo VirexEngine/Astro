@@ -1,0 +1,45 @@
+{
+  "id": "number_1",
+  "number": 1,
+  "title": "The Leader",
+  "summary": "A born pioneer driven by independence, ambition, and the desire to forge new paths. The number 1 radiates confidence and originality.",
+  "personality": [
+    "Natural-born leader with a strong sense of self",
+    "Independent, self-reliant, and driven to succeed",
+    "Highly original thinker who resists conformity",
+    "Ambitious and determined — takes initiative without hesitation",
+    "Can be impatient with those who move slower"
+  ],
+  "strengths": [
+    "Unmatched drive and willpower",
+    "Visionary thinking and originality",
+    "Courage to take risks others avoid",
+    "Leadership that inspires others",
+    "Strong executive abilities"
+  ],
+  "challenges": [
+    "Tendency toward stubbornness and rigidity",
+    "Can become overly domineering or self-centered",
+    "Struggles with delegation and teamwork",
+    "Impatience when things don't happen quickly",
+    "Difficulty admitting mistakes"
+  ],
+  "career": [
+    "Entrepreneur & Business Founder",
+    "Executive & CEO",
+    "Military or Political Leader",
+    "Inventor & Innovator",
+    "Surgeon or Elite Athlete"
+  ],
+  "relationships": "Ones seek partners who match their ambition but give them space. They love deeply but need to work on listening. Best matches: 3, 5, 6.",
+  "finance": "Natural accumulators of wealth. Ones think big and often create opportunities from nothing. Risk of overspending on ventures; advised to build emergency reserves.",
+  "health": "Prone to stress-related ailments due to overwork. Heart health and blood pressure need attention. Regular exercise and periods of stillness are highly beneficial.",
+  "lucky_elements": {
+    "numbers": [1, 10, 19, 28],
+    "colors": ["Gold", "Orange", "Sunrise Yellow"],
+    "days": ["Sunday", "Monday"],
+    "gemstone": "Ruby",
+    "metal": "Gold"
+  },
+  "confidence_stars": 5
+}

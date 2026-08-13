@@ -1,0 +1,45 @@
+{
+  "planet": "Mars",
+  "symbol": "♂",
+  "element": "Fire",
+  "quality": "Cardinal",
+  "rules": ["Aries", "Scorpio"],
+  "exaltation": "Capricorn",
+  "debilitation": "Cancer",
+  "moolatrikona": "Aries",
+  "natural_benefic": false,
+  "karakatwa": ["energy", "courage", "siblings", "land", "property", "accidents", "surgery", "military"],
+  "significations": {
+    "body": "blood, muscles, marrow, forehead, nose",
+    "profession": "military, police, surgery, engineering, sports, real estate",
+    "relationships": "younger siblings, husband (in female charts)"
+  },
+  "in_signs": {
+    "Aries": { "strength": "own", "statements": ["Bold, assertive, and fearlessly pioneering", "A natural warrior with high initiative", "Energetic but can be rash and impulsive"] },
+    "Taurus": { "strength": "neutral", "statements": ["Drive is channeled into material accumulation", "Persistent and stubborn in pursuing goals", "Sensual but with a possessive streak"] },
+    "Gemini": { "strength": "neutral", "statements": ["Mental energy and argumentative nature", "Sharp wit used as a weapon", "Interest in strategy and debate"] },
+    "Cancer": { "strength": "debilitated", "statements": ["Energy is scattered and misdirected", "Emotional volatility and anger issues", "Protective instincts override rational action"] },
+    "Leo": { "strength": "neutral", "statements": ["Courageous and dramatic in action", "A powerful drive for recognition", "Commands attention through sheer force of will"] },
+    "Virgo": { "strength": "neutral", "statements": ["Precise, methodical, and critical application of energy", "Excellent in technical fields", "Perfectionist with a sharp, analytical edge"] },
+    "Libra": { "strength": "neutral", "statements": ["Energy is directed toward fairness and justice", "Can be indecisive in taking action", "Battles for principles and ideals"] },
+    "Scorpio": { "strength": "own", "statements": ["Intensely focused, strategic, and relentless", "Powerful will to transform and overcome", "Secretive with a powerful ability for research"] },
+    "Sagittarius": { "strength": "neutral", "statements": ["Adventurous and philosophical application of energy", "Acts with conviction and enthusiasm", "A crusader for beliefs and ideals"] },
+    "Capricorn": { "strength": "exalted", "statements": ["Disciplined, patient, and strategically powerful", "Relentless ambition channeled into concrete achievement", "The engineer, builder, and commander at peak power"] },
+    "Aquarius": { "strength": "neutral", "statements": ["Energy directed toward humanitarian and innovative causes", "Rebellious and unconventional action", "Fights for group ideals"] },
+    "Pisces": { "strength": "neutral", "statements": ["Diffuse energy; spiritual or creative battles", "Can be self-sacrificing or evasive in conflict", "Strong in fields of intuition and healing"] }
+  },
+  "in_houses": {
+    "1": ["Strong, dynamic, and competitive personality", "Athletic build and high energy levels", "Bold initiator with leadership drive"],
+    "2": ["Income through real estate, military, or engineering", "Sharp speech; can be argumentative", "Financial ups and downs"],
+    "3": ["Courageous, bold, and dynamic communicator", "Strong sibling relationships with competitive dynamic", "Success in sports, writing, or media"],
+    "4": ["Property ownership is prominent", "Tension in domestic life or with mother", "Real estate as a significant asset"],
+    "5": ["Sharp, competitive intellect", "Passionate romantic nature", "Strong children; possible early conflicts with them"],
+    "6": ["Excellent at defeating enemies and competition", "Success in military, medical, or service fields", "Good recovery from illness"],
+    "7": ["Dynamic and assertive partner", "Business partnerships in real estate or engineering", "Possible conflict in marriage"],
+    "8": ["Danger from accidents or surgery; also longevity", "Inheritance from property", "Interest in occult sciences"],
+    "9": ["Philosophical warrior; fights for beliefs", "Strong father with military or authoritative background", "Long pilgrimages or journeys"],
+    "10": ["Outstanding career in military, police, surgery, or sports", "Recognition for courage and initiative", "A driven and ambitious professional life"],
+    "11": ["Gains through property, land, and real estate", "Large, energetic, and competitive social network", "Ambitious financial goals"],
+    "12": ["Hidden enemies; costs from conflicts", "Possible foreign military or medical career", "Spiritual warrior; moksha through sacrifice"]
+  }
+}

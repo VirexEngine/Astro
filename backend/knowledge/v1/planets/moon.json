@@ -1,0 +1,45 @@
+{
+  "planet": "Moon",
+  "symbol": "☽",
+  "element": "Water",
+  "quality": "Cardinal",
+  "rules": ["Cancer"],
+  "exaltation": "Taurus",
+  "debilitation": "Scorpio",
+  "moolatrikona": "Taurus",
+  "natural_benefic": true,
+  "karakatwa": ["mind", "mother", "emotions", "intuition", "public", "water", "memory"],
+  "significations": {
+    "body": "mind, blood, left eye, breast, lungs",
+    "profession": "public relations, nursing, farming, fishery, psychology",
+    "relationships": "mother, public, women"
+  },
+  "in_signs": {
+    "Aries": { "strength": "neutral", "statements": ["Impulsive emotions; acts before thinking", "Emotional courage and a pioneering spirit", "Mood fluctuations tied to a need for excitement"] },
+    "Taurus": { "strength": "exalted", "statements": ["Emotionally stable, grounded, and content", "Deep love for beauty, comfort, and sensory pleasures", "Reliable and nurturing emotional nature"] },
+    "Gemini": { "strength": "neutral", "statements": ["Curious and adaptable emotional nature", "Needs mental stimulation for emotional fulfillment", "Communicative and witty, but sometimes superficial"] },
+    "Cancer": { "strength": "own", "statements": ["Deeply nurturing, empathetic, and home-oriented", "Powerful intuition and emotional memory", "Strong attachment to family and roots"] },
+    "Leo": { "strength": "neutral", "statements": ["Warm, generous, and dramatic emotional expression", "Needs recognition and appreciation", "Proud emotions with a flair for the theatrical"] },
+    "Virgo": { "strength": "neutral", "statements": ["Analytical and critical emotional nature", "Finds comfort in routines and order", "Caring but expresses love through acts of service"] },
+    "Libra": { "strength": "neutral", "statements": ["Seeks emotional harmony and balance in all relationships", "Diplomatic and peace-loving nature", "Needs partnership for emotional well-being"] },
+    "Scorpio": { "strength": "debilitated", "statements": ["Intense, secretive, and deeply emotional nature", "Struggles with jealousy, possessiveness, or emotional turbulence", "Profound capacity for transformation through crisis"] },
+    "Sagittarius": { "strength": "neutral", "statements": ["Optimistic, adventurous, and freedom-loving emotional nature", "Philosophical approach to feelings", "Restless and needs exploration"] },
+    "Capricorn": { "strength": "neutral", "statements": ["Reserved and controlled emotional expression", "Security and achievement bring emotional comfort", "Can appear cold but is deeply responsible"] },
+    "Aquarius": { "strength": "neutral", "statements": ["Detached yet humanitarian emotional nature", "Needs intellectual connection over raw emotion", "Unconventional approach to feelings and relationships"] },
+    "Pisces": { "strength": "neutral", "statements": ["Deeply empathetic and spiritually oriented", "Emotions are fluid, imaginative, and sometimes escapist", "Strong psychic sensitivity and compassion"] }
+  },
+  "in_houses": {
+    "1": ["Emotionally sensitive and intuitive personality", "Attractive appearance with changing moods", "Strong public appeal"],
+    "2": ["Emotional attachment to wealth and family", "Income fluctuates like the Moon's phases", "Nurturing and caring in speech"],
+    "3": ["Emotional communication and creative writing ability", "Close emotional bond with siblings", "Restless and curious mind"],
+    "4": ["Deep love for home and mother", "Strong emotional foundation and comfort in domestic life", "Real estate gains possible"],
+    "5": ["Emotional creativity and intuitive intelligence", "Strong bond with children", "Romantic and sensitive"],
+    "6": ["Emotional sensitivity to illness and conflict", "Nurturing in service to others", "Fluctuating health; connected to emotional state"],
+    "7": ["Emotional partnerships; sensitive and nurturing spouse", "Public-facing career benefits", "Marriage brings emotional stability"],
+    "8": ["Deep emotional transformations; interest in the occult", "Inheritance is possible", "Psychic and intuitive abilities"],
+    "9": ["Emotionally connected to philosophy and religion", "Mother plays a key spiritual role", "Foreign travel fulfills emotional needs"],
+    "10": ["Public recognition and popularity in career", "Career in public service, hospitality, or psychology", "Emotional investment in professional life"],
+    "11": ["Gains through public connections", "Friendly and socially popular", "Emotional fulfillment through large social groups"],
+    "12": ["Spiritual and introspective emotional life", "Possible separation from the mother", "Hidden emotional life; strong dream world"]
+  }
+}

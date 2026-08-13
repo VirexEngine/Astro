@@ -1,0 +1,31 @@
+{
+  "planet": "Ketu",
+  "symbol": "☋",
+  "element": "Fire (shadow)",
+  "rules": [],
+  "exaltation": "Sagittarius",
+  "debilitation": "Gemini",
+  "moolatrikona": null,
+  "natural_benefic": false,
+  "karakatwa": ["spirituality", "moksha", "past lives", "detachment", "intuition", "isolation", "occult"],
+  "significations": {
+    "body": "nervous system (dissociation), spiritual nervous sensitivity, karmic wounds",
+    "profession": "spirituality, astrology, medicine, research, mysticism",
+    "relationships": "saints, mystics, those who inspire detachment"
+  },
+  "note": "Ketu is the south lunar node; it represents past-life mastery, spiritual gifts, and the desire for liberation. Where Ketu sits, the native has already mastered that area in past lives and may feel detachment or disinterest there. It operates through intuition and spiritual insight.",
+  "in_houses": {
+    "1": ["Spiritual, introspective, and detached personality", "May seem aloof or otherworldly", "Past-life spiritual gifts; strong psychic intuition"],
+    "2": ["Detachment from family and wealth; spiritual approach to resources", "Cryptic or spiritual speech", "Past-life mastery of values and material wisdom"],
+    "3": ["Detachment from siblings; past-life mastery of communication", "Intuitive and spiritually oriented writing or speech", "Short journeys have a spiritual purpose"],
+    "4": ["Detachment from home; possible foreign settlement", "Spiritual relationship with mother", "Past-life connection to land and roots"],
+    "5": ["Spiritual intelligence; past-life mastery of creativity", "Detachment from romantic love; intuitive children", "Interest in mantra, meditation, and spiritual creativity"],
+    "6": ["Past-life mastery of service and healing", "Excellent for spiritual healing and alternative medicine", "Defeats enemies through detachment"],
+    "7": ["Detachment from partnerships; karmic spouse connection", "Past-life relationship wounds seeking resolution", "Spiritually oriented marriage"],
+    "8": ["Deep past-life connection to occult and transformation", "Intuitive healer; interest in mysticism and death", "The most powerful placement for spiritual research"],
+    "9": ["Past-life mastery of philosophy and religion", "Detachment from dogma; direct spiritual experience", "A true seeker beyond organized religion"],
+    "10": ["Detachment from career status; work is service", "Past-life mastery of authority", "Recognition through spiritual work or unconventional paths"],
+    "11": ["Detachment from desires and social gains", "Past-life mastery of networks and goals", "Gains come unexpectedly; spiritual fulfillment over material"],
+    "12": ["The most spiritually powerful placement; moksha path", "Past-life mastery of liberation and the unseen", "Strong connection to the divine and the hidden"]
+  }
+}

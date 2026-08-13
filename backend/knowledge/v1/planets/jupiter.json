@@ -1,0 +1,45 @@
+{
+  "planet": "Jupiter",
+  "symbol": "♃",
+  "element": "Fire",
+  "quality": "Mutable",
+  "rules": ["Sagittarius", "Pisces"],
+  "exaltation": "Cancer",
+  "debilitation": "Capricorn",
+  "moolatrikona": "Sagittarius",
+  "natural_benefic": true,
+  "karakatwa": ["wisdom", "children", "husband (female charts)", "religion", "wealth", "teacher", "expansion", "law"],
+  "significations": {
+    "body": "liver, hips, thighs, ears, fat",
+    "profession": "law, teaching, finance, religion, philosophy, management",
+    "relationships": "husband (female charts), children, teacher, guru"
+  },
+  "in_signs": {
+    "Aries": { "strength": "neutral", "statements": ["Enthusiastic and pioneering wisdom", "Acts as an inspiring leader and motivator", "Expansive energy directed toward new beginnings"] },
+    "Taurus": { "strength": "neutral", "statements": ["Abundance through material and sensory pursuits", "Generous in matters of comfort and luxury", "Wisdom rooted in practical values"] },
+    "Gemini": { "strength": "neutral", "statements": ["Expansive and versatile intellect", "Wisdom through communication and diverse learning", "Enthusiastic teacher and networker"] },
+    "Cancer": { "strength": "exalted", "statements": ["The great nurturer; boundless compassion and wisdom", "Fortune through family, home, and emotional intelligence", "A deeply spiritual and protective force"] },
+    "Leo": { "strength": "neutral", "statements": ["Royal generosity and expansive creativity", "Leadership with wisdom and magnanimity", "Fame through philosophical or religious pursuits"] },
+    "Virgo": { "strength": "neutral", "statements": ["Wisdom expressed through analysis and service", "Expansive capacity for detail and craft", "Critical but ultimately benevolent"] },
+    "Libra": { "strength": "neutral", "statements": ["Wisdom expressed through balance, justice, and diplomacy", "Expansive social connections and partnerships", "Philosophical approach to relationships"] },
+    "Scorpio": { "strength": "neutral", "statements": ["Wisdom through transformation and deep investigation", "Expansive capacity for occult and hidden knowledge", "Intense but ultimately regenerative teacher"] },
+    "Sagittarius": { "strength": "own", "statements": ["The philosopher-king; wisdom at its most natural expression", "Expansive, optimistic, and deeply principled", "A true teacher, guide, and spiritual leader"] },
+    "Capricorn": { "strength": "debilitated", "statements": ["Wisdom is constrained by excessive practicality or materialism", "Generosity may be blocked by ambition or structure", "The teacher is too rigid; growth is limited"] },
+    "Aquarius": { "strength": "neutral", "statements": ["Wisdom directed toward humanity and social progress", "Expansive ideals about freedom and equality", "The humanitarian philosopher"] },
+    "Pisces": { "strength": "own", "statements": ["Deep spiritual wisdom and boundless compassion", "Intuitive and mystical expression of knowledge", "The purest, most spiritual form of Jupiter"] }
+  },
+  "in_houses": {
+    "1": ["Wise, generous, and jovial personality", "Good health and optimistic outlook", "A natural teacher and guide"],
+    "2": ["Great wealth accumulation over time", "Eloquent and knowledgeable speech", "Family prosperity"],
+    "3": ["Wisdom in communication; a gifted writer or speaker", "Fortunate relationship with siblings", "Success in higher education-related communication"],
+    "4": ["Happiness in home life; fortunate mother", "Real estate and domestic prosperity", "Higher education and philosophical household"],
+    "5": ["Brilliant and wise intelligence", "Multiple fortunate children", "Fame through creative or intellectual works"],
+    "6": ["Overcomes enemies through righteousness", "Good health and recovery", "Service in law or medical fields"],
+    "7": ["Wise, fortunate, and generous spouse", "Successful and ethical business partnerships", "Harmonious marriage"],
+    "8": ["Long life and longevity", "Inheritance and gains through others", "Interest in philosophy of death and transformation"],
+    "9": ["Highly fortunate; the most powerful placement", "Profound wisdom, philosophy, and religious devotion", "Deep spiritual merit from past lives"],
+    "10": ["Outstanding and respected career", "Leadership in law, religion, or finance", "Public recognition for wisdom"],
+    "11": ["Great gains and fulfillment of desires", "Highly influential social circle", "Aspirations are large and ultimately fulfilled"],
+    "12": ["Spiritual liberation and moksha; losses are minimized", "Foreign connections and gains", "Generous charity and spiritual practice"]
+  }
+}

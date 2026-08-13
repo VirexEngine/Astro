@@ -1,0 +1,45 @@
+{
+  "planet": "Rahu",
+  "symbol": "☊",
+  "element": "Air (shadow)",
+  "rules": [],
+  "exaltation": "Gemini",
+  "debilitation": "Sagittarius",
+  "moolatrikona": null,
+  "natural_benefic": false,
+  "karakatwa": ["ambition", "obsession", "foreigners", "technology", "illusion", "unconventional", "worldly desire"],
+  "significations": {
+    "body": "nervous system (over-stimulation), skin diseases, viruses",
+    "profession": "politics, technology, foreign trade, media, cinema, research",
+    "relationships": "outcasts, foreigners, unconventional associations"
+  },
+  "note": "Rahu is a shadow planet (mathematical point). It behaves like the planet ruling the sign it occupies and amplifies those themes obsessively. Its statements should be interpreted as strong desires or karmic patterns from past lives.",
+  "in_signs": {
+    "Aries": { "statements": ["Obsessive drive for independence and pioneering action", "Worldly ambition through bold, risk-taking behavior", "Past-life warrior energy seeking new beginnings"] },
+    "Taurus": { "statements": ["Intense desire for material wealth and sensory pleasures", "Worldly ambition through accumulation and comfort", "Strong karmic pull toward financial mastery"] },
+    "Gemini": { "statements": ["Obsessive curiosity and desire for information", "Worldly success through communication and intellect", "A master of multiple fields and ideas"] },
+    "Cancer": { "statements": ["Intense desire for emotional security and belonging", "Worldly ambition through home, property, or public care", "Complex karmic bonds with family and mother"] },
+    "Leo": { "statements": ["Obsessive desire for fame, recognition, and power", "Worldly ambition through performance and leadership", "Strong karmic pull toward being seen and celebrated"] },
+    "Virgo": { "statements": ["Intense focus on perfection, service, and analysis", "Worldly success through technical mastery and critique", "Ambition for perfection can become obsessive"] },
+    "Libra": { "statements": ["Intense desire for relationships, harmony, and balance", "Worldly ambition through diplomacy and partnerships", "Strong karmic pull toward artistic refinement"] },
+    "Scorpio": { "statements": ["Obsessive desire for transformation, power, and secrets", "Worldly ambition through research, occult, or investigation", "Intense karmic patterns around power and control"] },
+    "Sagittarius": { "statements": ["Intense desire for wisdom, freedom, and adventure", "Worldly ambition through higher learning and belief systems", "Karmic restlessness seeking the ultimate truth"] },
+    "Capricorn": { "statements": ["Obsessive ambition for status, power, and achievement", "Worldly success through discipline and structures", "Strong karmic drive toward mastery and authority"] },
+    "Aquarius": { "statements": ["Intense desire for innovation, reform, and social impact", "Worldly ambition through technology and community", "Karmic role as a visionary or revolutionary"] },
+    "Pisces": { "statements": ["Intense spiritual longing or escapist tendencies", "Worldly ambition blurs with spiritual or artistic pursuits", "Karmic pull toward dissolution of boundaries"] }
+  },
+  "in_houses": {
+    "1": ["Strong worldly ambition; an unusual or magnetic personality", "Obsession with self-improvement and reinvention", "A life defined by unconventional choices"],
+    "2": ["Obsessive desire for wealth; multiple and diverse income sources", "Speech may be deceptive or unconventional", "Family circumstances may be unusual"],
+    "3": ["Powerful communicator and media personality", "Obsessive pursuit of skills and information", "Unconventional sibling relationships"],
+    "4": ["Intense connection to home; possible foreign settlement", "Desire for real estate and property", "Unusual or complex relationship with mother"],
+    "5": ["Obsessive creative or romantic nature", "Unconventional approach to intellect and children", "Fame through speculative or creative fields"],
+    "6": ["Excellent for winning over enemies and competition", "Success in law, medicine, or public service", "Health issues may be elusive or mysterious"],
+    "7": ["Unconventional or foreign partner; intense relationship", "Business partnerships may be risky but rewarding", "Karmic marriage connections"],
+    "8": ["Deep interest in occult, mysteries, and hidden knowledge", "Gains through inheritance or joint resources", "Unusual transformation and longevity"],
+    "9": ["Unconventional philosophical or religious views", "Fortune through foreign cultures and travel", "A guru or spiritual guide may be unconventional"],
+    "10": ["Meteoric career rise through unconventional means", "Fame in politics, technology, or media", "Ambition to reach the pinnacle is all-consuming"],
+    "11": ["Extraordinary financial gains and fulfillment of desires", "Large and diverse social network", "Worldly ambitions are ultimately realized"],
+    "12": ["Foreign travel and settlement", "Spiritual or hidden pursuits", "Possible addiction to escapist pleasures; but also moksha"]
+  }
+}

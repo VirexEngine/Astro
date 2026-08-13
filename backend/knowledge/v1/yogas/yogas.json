@@ -1,0 +1,270 @@
+{
+  "yogas": [
+    {
+      "id": "raja_yoga_1",
+      "name": "Raja Yoga (Lord of 1 + 5)",
+      "category": "raja",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "wealth", "personality"],
+      "source": "BPHS Ch.41",
+      "conditions": [
+        { "type": "conjunction_or_mutual_aspect", "houses": [1, 5] }
+      ],
+      "description": "The lords of the 1st and 5th houses are conjunct or in mutual aspect, forming a powerful Raja Yoga that bestows intelligence, authority, and success.",
+      "statements": [
+        "A powerful Raja Yoga is present in your chart, linking your personality with intelligence and creativity.",
+        "You are blessed with leadership, recognition, and remarkable mental capabilities.",
+        "Success in government, academia, or creative fields is strongly indicated."
+      ]
+    },
+    {
+      "id": "raja_yoga_2",
+      "name": "Raja Yoga (Lord of 1 + 9)",
+      "category": "raja",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "wealth", "fortune"],
+      "source": "BPHS Ch.41",
+      "conditions": [
+        { "type": "conjunction_or_mutual_aspect", "houses": [1, 9] }
+      ],
+      "description": "The lords of the 1st and 9th houses are conjunct or in mutual aspect, a highly auspicious Raja Yoga for fortune and dharma.",
+      "statements": [
+        "An outstanding Raja Yoga links your personality with supreme fortune.",
+        "Your life is guided by a powerful dharmic purpose and philosophical wisdom.",
+        "Success, fame, and good fortune will manifest strongly after your 30s."
+      ]
+    },
+    {
+      "id": "raja_yoga_3",
+      "name": "Raja Yoga (Lord of 4 + 5)",
+      "category": "raja",
+      "priority": 9,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "wealth", "family"],
+      "source": "BPHS Ch.41",
+      "conditions": [
+        { "type": "conjunction_or_mutual_aspect", "houses": [4, 5] }
+      ],
+      "description": "Lords of the 4th and 5th houses combined, creating a Raja Yoga for property, happiness, children, and intelligence.",
+      "statements": [
+        "A powerful Raja Yoga blesses you with property, domestic happiness, and brilliant intelligence.",
+        "Your home life is a foundation for professional and creative success.",
+        "Strong real estate gains and fortunate children are indicated."
+      ]
+    },
+    {
+      "id": "raja_yoga_4",
+      "name": "Raja Yoga (Lord of 9 + 10)",
+      "category": "raja",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "rare",
+      "module": ["career", "wealth", "fame"],
+      "source": "BPHS Ch.41",
+      "conditions": [
+        { "type": "conjunction_or_mutual_aspect", "houses": [9, 10] }
+      ],
+      "description": "The most powerful Raja Yoga: the lords of Fortune (9th) and Career (10th) are connected. This is called Dharma-Karmadhipati Yoga.",
+      "statements": [
+        "The supreme Dharma-Karmadhipati Raja Yoga blesses your chart with extraordinary career success.",
+        "Your profession is aligned with your dharma, creating a path of meaningful achievement.",
+        "Public recognition, high status, and lasting fame are strongly indicated in your Dasha periods."
+      ]
+    },
+    {
+      "id": "gaja_kesari_yoga",
+      "name": "Gaja Kesari Yoga",
+      "category": "benefic",
+      "priority": 9,
+      "severity": "high",
+      "rarity": "common",
+      "module": ["personality", "wealth", "fame"],
+      "source": "BPHS Ch.70",
+      "conditions": [
+        { "type": "conjunction_or_mutual_kendra", "planets": ["Jupiter", "Moon"] }
+      ],
+      "description": "Jupiter and Moon are in mutual Kendra (1, 4, 7, 10 from each other), creating the Elephant-Lion Yoga of brilliance, fame, and wisdom.",
+      "statements": [
+        "Gaja Kesari Yoga — the Elephant and Lion — graces your chart with brilliance, fame, and moral authority.",
+        "You possess the intellectual strength of an elephant and the courage of a lion.",
+        "Recognition, wisdom, and public respect will grow throughout your life."
+      ]
+    },
+    {
+      "id": "pancha_mahapurusha_ruchaka",
+      "name": "Ruchaka Yoga (Mars)",
+      "category": "pancha_mahapurusha",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "personality", "courage"],
+      "source": "BPHS Ch.75",
+      "conditions": [
+        { "type": "planet_in_own_or_exalted_in_kendra", "planet": "Mars" }
+      ],
+      "description": "Mars is in its own sign (Aries/Scorpio) or exaltation (Capricorn) in a Kendra house (1,4,7,10), forming Ruchaka Yoga of the Pancha Mahapurusha.",
+      "statements": [
+        "The legendary Ruchaka Yoga is present in your chart, marking you as a person of extraordinary courage, strength, and leadership.",
+        "You have the aura of a warrior and commander; enemies will bow before you.",
+        "Success in military, law enforcement, sports, or any field requiring decisive action is destined."
+      ]
+    },
+    {
+      "id": "pancha_mahapurusha_bhadra",
+      "name": "Bhadra Yoga (Mercury)",
+      "category": "pancha_mahapurusha",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "personality", "intellect"],
+      "source": "BPHS Ch.75",
+      "conditions": [
+        { "type": "planet_in_own_or_exalted_in_kendra", "planet": "Mercury" }
+      ],
+      "description": "Mercury is in its own sign (Gemini/Virgo) or exaltation (Virgo) in a Kendra house (1,4,7,10), forming Bhadra Yoga.",
+      "statements": [
+        "The Bhadra Yoga, one of the five great yogas, is present, blessing you with exceptional intellectual brilliance.",
+        "You are a gifted communicator, analyst, and thinker whose words carry great weight.",
+        "Success in writing, finance, science, or any communication-intensive field is your destiny."
+      ]
+    },
+    {
+      "id": "pancha_mahapurusha_hamsa",
+      "name": "Hamsa Yoga (Jupiter)",
+      "category": "pancha_mahapurusha",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "personality", "wisdom"],
+      "source": "BPHS Ch.75",
+      "conditions": [
+        { "type": "planet_in_own_or_exalted_in_kendra", "planet": "Jupiter" }
+      ],
+      "description": "Jupiter is in its own sign (Sagittarius/Pisces) or exaltation (Cancer) in a Kendra house (1,4,7,10), forming Hamsa Yoga.",
+      "statements": [
+        "The divine Hamsa Yoga graces your chart, marking you as a person of profound wisdom, grace, and moral authority.",
+        "You are a natural teacher, guide, and philosopher whose life is touched by divine grace.",
+        "Wealth, knowledge, and spiritual fulfillment will be your life's rewards."
+      ]
+    },
+    {
+      "id": "pancha_mahapurusha_malavya",
+      "name": "Malavya Yoga (Venus)",
+      "category": "pancha_mahapurusha",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "personality", "love"],
+      "source": "BPHS Ch.75",
+      "conditions": [
+        { "type": "planet_in_own_or_exalted_in_kendra", "planet": "Venus" }
+      ],
+      "description": "Venus is in its own sign (Taurus/Libra) or exaltation (Pisces) in a Kendra house (1,4,7,10), forming Malavya Yoga.",
+      "statements": [
+        "The beautiful Malavya Yoga marks you as a person of extraordinary grace, artistic talent, and romantic magnetism.",
+        "Luxury, beauty, and the finest pleasures of life will surround you.",
+        "Exceptional success in arts, entertainment, fashion, or finance is strongly indicated."
+      ]
+    },
+    {
+      "id": "pancha_mahapurusha_sasa",
+      "name": "Sasa Yoga (Saturn)",
+      "category": "pancha_mahapurusha",
+      "priority": 10,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "personality", "discipline"],
+      "source": "BPHS Ch.75",
+      "conditions": [
+        { "type": "planet_in_own_or_exalted_in_kendra", "planet": "Saturn" }
+      ],
+      "description": "Saturn is in its own sign (Capricorn/Aquarius) or exaltation (Libra) in a Kendra house (1,4,7,10), forming Sasa Yoga.",
+      "statements": [
+        "The powerful Sasa Yoga blesses your chart with the discipline, perseverance, and authority of Saturn at its peak.",
+        "You are destined to rise from humble beginnings to a position of great power and respect.",
+        "Leadership over the masses, political authority, or mastery of a technical field is your destiny."
+      ]
+    },
+    {
+      "id": "adhi_yoga",
+      "name": "Adhi Yoga",
+      "category": "benefic",
+      "priority": 8,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "personality", "wealth"],
+      "source": "BPHS Ch.36",
+      "conditions": [
+        { "type": "benefics_in_6_7_8_from_moon" }
+      ],
+      "description": "Mercury, Venus, and Jupiter are in the 6th, 7th, and 8th houses from the Moon, forming Adhi Yoga of leadership and wealth.",
+      "statements": [
+        "Adhi Yoga — the Yoga of the Chief — is present, indicating great leadership qualities and capacity to rise above enemies.",
+        "You have the natural ability to command, organize, and lead groups of people.",
+        "Political success, executive power, or community leadership is strongly indicated."
+      ]
+    },
+    {
+      "id": "chandra_mangal_yoga",
+      "name": "Chandra Mangala Yoga",
+      "category": "dhana",
+      "priority": 7,
+      "severity": "medium",
+      "rarity": "common",
+      "module": ["wealth", "career"],
+      "source": "BPHS",
+      "conditions": [
+        { "type": "conjunction", "planets": ["Moon", "Mars"] }
+      ],
+      "description": "Moon and Mars are conjunct, forming Chandra Mangala Yoga, indicating wealth through business, real estate, and courageous action.",
+      "statements": [
+        "Chandra Mangala Yoga is present, combining emotional intelligence with courageous drive.",
+        "Significant wealth through business, real estate, or entrepreneurship is strongly indicated.",
+        "You have the emotional courage to take calculated risks and profit from them."
+      ]
+    },
+    {
+      "id": "neecha_bhanga_raja_yoga",
+      "name": "Neecha Bhanga Raja Yoga",
+      "category": "raja",
+      "priority": 8,
+      "severity": "high",
+      "rarity": "uncommon",
+      "module": ["career", "personality"],
+      "source": "BPHS",
+      "conditions": [
+        { "type": "neecha_bhanga" }
+      ],
+      "description": "A debilitated planet is cancelled by a specific condition, turning weakness into extraordinary strength.",
+      "statements": [
+        "A Neecha Bhanga (cancellation of debilitation) is present in your chart, turning a potential weakness into extraordinary strength.",
+        "What appeared to be a flaw in your chart becomes one of your greatest tools for success.",
+        "This yoga is a hallmark of self-made individuals who overcome adversity to achieve greatness."
+      ]
+    },
+    {
+      "id": "kemadruma_yoga",
+      "name": "Kemadruma Yoga (Challenging)",
+      "category": "challenging",
+      "priority": 7,
+      "severity": "medium",
+      "rarity": "common",
+      "module": ["personality", "wealth"],
+      "source": "BPHS Ch.32",
+      "conditions": [
+        { "type": "kemadruma" }
+      ],
+      "description": "The Moon has no planets in the 2nd or 12th house from it, creating Kemadruma Yoga indicating hardships and isolation.",
+      "statements": [
+        "Kemadruma Yoga creates a tendency toward emotional isolation and periods of hardship.",
+        "You may often feel you must rely solely on your own resources and inner strength.",
+        "This challenging pattern can be mitigated by strong Jupiter placement or association with benefics."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "planet": "Venus",
+  "symbol": "♀",
+  "element": "Earth/Air",
+  "quality": "Fixed/Cardinal",
+  "rules": ["Taurus", "Libra"],
+  "exaltation": "Pisces",
+  "debilitation": "Virgo",
+  "moolatrikona": "Libra",
+  "natural_benefic": true,
+  "karakatwa": ["love", "beauty", "luxury", "arts", "wife (male charts)", "vehicles", "pleasures", "creativity"],
+  "significations": {
+    "body": "reproductive system, kidneys, face, eyes, chin",
+    "profession": "arts, fashion, music, luxury goods, finance, diplomacy",
+    "relationships": "wife (male charts), lovers, creative partners"
+  },
+  "in_signs": {
+    "Aries": { "strength": "neutral", "statements": ["Love is passionate, impulsive, and direct", "Attraction to bold and dynamic partners", "Creative energy that is fiery and pioneering"] },
+    "Taurus": { "strength": "own", "statements": ["Sensual, luxurious, and deeply appreciative of beauty", "Love expressed through comfort, loyalty, and gifts", "Strong artistic talent and love of nature"] },
+    "Gemini": { "strength": "neutral", "statements": ["Love through intellectual connection and communication", "Charming, witty, and versatile in relationships", "Aesthetic appreciation for literature and ideas"] },
+    "Cancer": { "strength": "neutral", "statements": ["Love expressed through nurturing and deep emotional bonds", "Home and family are central to romantic fulfillment", "Deeply devoted but can be possessive"] },
+    "Leo": { "strength": "neutral", "statements": ["Romantic, generous, and grand in love", "Attraction to glamorous and powerful partners", "Creative expression through performance and art"] },
+    "Virgo": { "strength": "debilitated", "statements": ["Love is overly critical and perfectionistic", "Difficulty expressing affection openly", "Aesthetic standards may block romantic fulfillment"] },
+    "Libra": { "strength": "own", "statements": ["The quintessential romantic; graceful, charming, and balanced", "Love of beauty, partnership, and social harmony", "Refined taste and a gift for diplomacy"] },
+    "Scorpio": { "strength": "neutral", "statements": ["Intense, passionate, and transformative love", "Deep emotional bonds; all-or-nothing relationships", "Strong sexual magnetism"] },
+    "Sagittarius": { "strength": "neutral", "statements": ["Love of freedom, adventure, and philosophical connection", "Romantic in an idealistic and expansive way", "Enjoys learning from and with partners"] },
+    "Capricorn": { "strength": "neutral", "statements": ["Practical, loyal, and reserved in love", "Attraction to mature, stable, and successful partners", "Love deepens slowly but is enduring"] },
+    "Aquarius": { "strength": "neutral", "statements": ["Love expressed through intellectual and idealistic bonds", "Needs freedom and unconventionality in relationships", "Attracted to unique, progressive individuals"] },
+    "Pisces": { "strength": "exalted", "statements": ["Unconditional, spiritual, and selfless love at its highest", "Profound artistic and musical talent", "The ideal romantic; love transcends the material world"] }
+  },
+  "in_houses": {
+    "1": ["Charming, beautiful, and aesthetically refined personality", "Natural magnetism and social grace", "Love of beauty and the arts"],
+    "2": ["Wealth through arts, beauty, or luxury", "Melodious and charming speech", "Family life is harmonious and prosperous"],
+    "3": ["Creative communication; gifted in arts and writing", "Harmonious sibling relationships", "Success in media, music, or fashion"],
+    "4": ["Beautiful and harmonious home life", "Deep love for mother", "Property and real estate gains"],
+    "5": ["Deep romantic nature; strong love affairs", "Artistic creativity and talents", "Charming and beautiful children"],
+    "6": ["Service through beauty or health industries", "Possible health issues related to lifestyle", "Overcomes conflicts with charm"],
+    "7": ["Beautiful, charming, and artistic spouse", "Harmonious and loving marriage", "Success in partnerships involving arts or luxury"],
+    "8": ["Gains through spouse or inheritance", "Interest in mysteries and hidden arts", "Long life"],
+    "9": ["Love of philosophy, religion, and foreign cultures", "Fortunate travels and pilgrimages", "Artistic and spiritual inclinations"],
+    "10": ["Success in arts, entertainment, fashion, or diplomacy", "Fame and public recognition for creativity", "Beautiful and harmonious professional life"],
+    "11": ["Gains through arts and social connections", "Influential and artistic social circle", "Desires fulfilled through creative work"],
+    "12": ["Hidden pleasures and foreign romantic connections", "Possible spiritual artistic practice", "Comfortable bed pleasures; foreign settlement possible"]
+  }
+}

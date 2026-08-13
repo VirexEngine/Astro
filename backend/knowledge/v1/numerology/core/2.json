@@ -1,0 +1,45 @@
+{
+  "id": "number_2",
+  "number": 2,
+  "title": "The Diplomat",
+  "summary": "The great mediator and collaborator. Number 2 thrives in partnership, values harmony above all, and has an extraordinary intuitive capacity.",
+  "personality": [
+    "Gentle, empathetic, and deeply intuitive",
+    "Natural peacemaker who reads the room effortlessly",
+    "Highly cooperative — works best alongside others",
+    "Sensitive to criticism but resilient in quiet ways",
+    "Patient listener with extraordinary emotional intelligence"
+  ],
+  "strengths": [
+    "Outstanding diplomacy and conflict-resolution skills",
+    "Deep empathy that creates genuine connections",
+    "Intuitive understanding of others' feelings",
+    "Ability to find common ground in any dispute",
+    "Thoughtful and careful decision-maker"
+  ],
+  "challenges": [
+    "Tendency to put others' needs before their own",
+    "Can be indecisive due to seeing all sides",
+    "Over-sensitivity to criticism or conflict",
+    "Risk of becoming overly dependent on partners",
+    "Struggles with asserting personal boundaries"
+  ],
+  "career": [
+    "Counsellor & Therapist",
+    "Diplomat & Mediator",
+    "Human Resources Professional",
+    "Musician & Sound Artist",
+    "Nurse or Social Worker"
+  ],
+  "relationships": "Twos are devoted, romantic partners who thrive in committed relationships. They need emotional validation and reciprocal care. Best matches: 1, 4, 8.",
+  "finance": "Conservative with money and prefers security over speculation. Excellent at budgeting. Advised to avoid letting others take financial advantage of their generous nature.",
+  "health": "Prone to stress and anxiety due to emotional absorption. Sleep quality is crucial. Meditation, yoga, and quiet time in nature restore their balance significantly.",
+  "lucky_elements": {
+    "numbers": [2, 11, 20, 29],
+    "colors": ["Silver", "Cream", "Pale Blue"],
+    "days": ["Monday", "Friday"],
+    "gemstone": "Pearl",
+    "metal": "Silver"
+  },
+  "confidence_stars": 5
+}

@@ -1,0 +1,45 @@
+{
+  "id": "number_5",
+  "number": 5,
+  "title": "The Free Spirit",
+  "summary": "Adventure-seeking, versatile, and magnetically alive. Number 5 craves freedom and sensory experience, making them the most dynamic and unpredictable number in the system.",
+  "personality": [
+    "Adventurous, versatile, and craving constant change",
+    "Quick-witted, curious, and endlessly adaptable",
+    "Charismatic — people are naturally drawn to their energy",
+    "Freedom-loving to the point of restlessness",
+    "Thrives on novelty; struggles with routine"
+  ],
+  "strengths": [
+    "Extraordinary adaptability to any situation",
+    "Gift for communication and persuasion",
+    "Natural salesmanship and marketing instinct",
+    "Courage to take on new challenges",
+    "High intellectual curiosity and quick learning"
+  ],
+  "challenges": [
+    "Commitment issues in relationships and careers",
+    "Impulsive decisions they later regret",
+    "Tendency toward overindulgence in pleasures",
+    "Restlessness that prevents deep mastery",
+    "Inconsistency frustrates colleagues and partners"
+  ],
+  "career": [
+    "Journalist & Travel Writer",
+    "Sales & Marketing Executive",
+    "Tour Guide & Expedition Leader",
+    "Pilot & Professional Traveller",
+    "Entrepreneur & Startup Founder"
+  ],
+  "relationships": "Fives are exciting, passionate partners but need space to breathe. They love hard and intensely in the short-term; long-term commitment requires conscious effort. Best matches: 1, 3, 7.",
+  "finance": "Fives can earn well in bursts but spend freely. Financial volatility is common. Building a consistent savings habit is their greatest financial challenge and opportunity.",
+  "health": "Energetic and generally robust. Must guard against overindulgence, especially related to food, substances, or lack of sleep. Nervous system needs grounding practices.",
+  "lucky_elements": {
+    "numbers": [5, 14, 23, 32],
+    "colors": ["Turquoise", "Aqua", "Bright Silver"],
+    "days": ["Wednesday", "Friday"],
+    "gemstone": "Aquamarine",
+    "metal": "Mercury (Quicksilver)"
+  },
+  "confidence_stars": 5
+}

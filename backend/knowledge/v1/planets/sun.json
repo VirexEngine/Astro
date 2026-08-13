@@ -1,0 +1,45 @@
+{
+  "planet": "Sun",
+  "symbol": "☉",
+  "element": "Fire",
+  "quality": "Fixed",
+  "rules": ["Leo"],
+  "exaltation": "Aries",
+  "debilitation": "Libra",
+  "moolatrikona": "Leo",
+  "natural_benefic": false,
+  "karakatwa": ["soul", "father", "authority", "government", "ego", "vitality", "health"],
+  "significations": {
+    "body": "heart, spine, eyes (right), bones",
+    "profession": "government, politics, leadership, medicine, law",
+    "relationships": "father, authority figures, kings"
+  },
+  "in_signs": {
+    "Aries": { "strength": "exalted", "statements": ["Soul is pioneering and courageous", "Strong willpower and leadership drive", "Natural born leader with a fiery spirit"] },
+    "Taurus": { "strength": "neutral", "statements": ["Determination and persistence mark the personality", "Strong material instincts and desire for comfort", "Steady and reliable but can be stubborn"] },
+    "Gemini": { "strength": "neutral", "statements": ["Intellectual vitality and curiosity", "Expressive, witty, and communicative self-expression", "Versatile but may lack focus"] },
+    "Cancer": { "strength": "neutral", "statements": ["Emotional and nurturing core to the identity", "Strong connection to home and family", "Sensitive ego that seeks security"] },
+    "Leo": { "strength": "own", "statements": ["Majestic, confident, and naturally commanding presence", "Born to lead and be noticed", "Generous spirit with a powerful creative drive"] },
+    "Virgo": { "strength": "neutral", "statements": ["Analytical and detail-oriented sense of self", "Identity tied to service and perfectionism", "Modest but highly capable"] },
+    "Libra": { "strength": "debilitated", "statements": ["Identity struggles with indecision and people-pleasing", "Difficulty asserting the self; defers to others", "Charm is present but ego is weakened"] },
+    "Scorpio": { "strength": "neutral", "statements": ["Deep, intense, and probing sense of self", "Powerful will but prone to secrecy and power struggles", "Transformative identity"] },
+    "Sagittarius": { "strength": "neutral", "statements": ["Philosophical and expansive self-expression", "Optimistic, adventurous, and freedom-loving", "Natural teacher and guide"] },
+    "Capricorn": { "strength": "neutral", "statements": ["Ambitious, disciplined, and responsible core", "Success comes through hard work and perseverance", "Can be overly serious or status-conscious"] },
+    "Aquarius": { "strength": "neutral", "statements": ["Unconventional, humanitarian, and intellectually driven", "Identity is linked to ideals and community", "Detached from ego but passionate about causes"] },
+    "Pisces": { "strength": "neutral", "statements": ["Sensitive, spiritual, and empathetic identity", "Boundaries between self and others can be blurry", "Strong intuition and artistic potential"] }
+  },
+  "in_houses": {
+    "1": ["Commanding presence and strong vitality", "Natural authority and confidence", "Leadership qualities are prominent"],
+    "2": ["Wealth through government or positions of authority", "Strong family pride", "Powerful speech and commanding voice"],
+    "3": ["Courageous and bold in communication", "Leadership in media, writing, or siblings circle", "Strong willpower in short ventures"],
+    "4": ["Pride in home and motherland", "Father may be dominating", "Good for property matters"],
+    "5": ["Creative brilliance and intelligence", "Fame through children or arts", "Strong romantic nature"],
+    "6": ["Overcomes enemies through authority", "Strong in competitions and litigation", "Service-oriented with government roles"],
+    "7": ["Partner is authoritative or influential", "Success through partnerships with powerful people", "Marital relationships have a power dynamic"],
+    "8": ["Longevity but ego battles with transformation", "Hidden wealth or inheritance", "Interest in occult or mysteries"],
+    "9": ["Strong philosophical and religious bent", "Fortunate relationship with father", "Fame through higher knowledge"],
+    "10": ["Outstanding career achievements", "Recognition and fame in chosen profession", "Natural leadership in career"],
+    "11": ["Gains from government or powerful figures", "Influential social circle", "Ambitious and goal-oriented"],
+    "12": ["Spiritual inclinations; challenges with ego", "Foreign settlements possible", "Hidden identity or behind-the-scenes authority"]
+  }
+}

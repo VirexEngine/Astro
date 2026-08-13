@@ -1,0 +1,45 @@
+{
+  "planet": "Mercury",
+  "symbol": "☿",
+  "element": "Earth/Air",
+  "quality": "Mutable",
+  "rules": ["Gemini", "Virgo"],
+  "exaltation": "Virgo",
+  "debilitation": "Pisces",
+  "moolatrikona": "Virgo",
+  "natural_benefic": true,
+  "karakatwa": ["intellect", "communication", "commerce", "skin", "siblings", "education", "writing"],
+  "significations": {
+    "body": "nervous system, skin, tongue, hands, arms",
+    "profession": "accounting, writing, journalism, IT, law, trading, astrology",
+    "relationships": "maternal uncle, friends, colleagues"
+  },
+  "in_signs": {
+    "Aries": { "strength": "neutral", "statements": ["Quick, sharp, and impulsive thinking", "Ideas flow rapidly but conclusions may be hasty", "Entrepreneurial and pioneering communication style"] },
+    "Taurus": { "strength": "neutral", "statements": ["Methodical, practical, and deliberate thinking", "Ideas are rooted in material reality and common sense", "Patient communicator with a focus on value"] },
+    "Gemini": { "strength": "own", "statements": ["Brilliant, versatile, and rapid-fire intellect", "A natural wordsmith, communicator, and multi-tasker", "Curious about everything but may struggle with depth"] },
+    "Cancer": { "strength": "neutral", "statements": ["Intuitive and emotionally colored thinking", "Memory is strongly tied to feelings", "Nurturing communication style"] },
+    "Leo": { "strength": "neutral", "statements": ["Creative, dramatic, and confident communication", "Ideas are expressed with flair and authority", "Pride in intellectual achievements"] },
+    "Virgo": { "strength": "exalted", "statements": ["Analytical perfection and razor-sharp critical thinking", "Mastery of detail, data, and systematic analysis", "The ultimate logical and discerning mind"] },
+    "Libra": { "strength": "neutral", "statements": ["Diplomatic, fair, and balanced communication", "Skilled at seeing both sides of every argument", "A natural mediator and negotiator"] },
+    "Scorpio": { "strength": "neutral", "statements": ["Deep, investigative, and penetrating intellect", "A detective-like mind that seeks hidden truths", "Communication can be intense or secretive"] },
+    "Sagittarius": { "strength": "neutral", "statements": ["Philosophical, broad-minded, and enthusiastic communication", "Ideas are big-picture oriented", "Can overlook details in favor of grand concepts"] },
+    "Capricorn": { "strength": "neutral", "statements": ["Structured, disciplined, and practical intellect", "Communication is formal and result-oriented", "Slow but steady and reliable thinking"] },
+    "Aquarius": { "strength": "neutral", "statements": ["Innovative, original, and unconventional thinking", "Ideas are futuristic and group-oriented", "Intellectual rebel with a humanitarian bent"] },
+    "Pisces": { "strength": "debilitated", "statements": ["Intuitive but diffuse and scattered thinking", "Difficulty with logical precision and linear thought", "Rich imagination but poor attention to detail"] }
+  },
+  "in_houses": {
+    "1": ["Intelligent, articulate, and intellectually sharp personality", "Youthful appearance and quick wit", "Natural communicator"],
+    "2": ["Wealth through communication, trade, or writing", "Eloquent and witty speech", "Multiple income streams"],
+    "3": ["Outstanding in communication, writing, and media", "Intellectual bond with siblings", "Skilled in short journeys and local commerce"],
+    "4": ["Intellectual home environment; highly educated mother", "Learning from home; love of books", "Real estate dealings"],
+    "5": ["Highly intelligent and analytical", "Academic excellence", "Love of strategic games and puzzles"],
+    "6": ["Meticulous in service and work", "Success in legal, medical, or financial fields", "Overcomes obstacles through intellect"],
+    "7": ["Intellectual and communicative partner", "Success in business partnerships involving trade", "Contracts and legal matters are prominent"],
+    "8": ["Deep research abilities; interest in hidden knowledge", "Financial gains through inheritance or research", "Forensic or occult interests"],
+    "9": ["Philosophical and spiritual intellect", "Success in writing, publishing, or law", "Multiple higher degrees"],
+    "10": ["Outstanding career in communication, IT, or media", "Intellectual recognition in profession", "Success through writing or teaching"],
+    "11": ["Gains through intellectual endeavors and networks", "Large circle of intellectual friends", "Fulfillment through learning and communication"],
+    "12": ["Hidden or foreign intellectual activities", "Writing in seclusion or for spiritual purposes", "Interest in foreign languages"]
+  }
+}
