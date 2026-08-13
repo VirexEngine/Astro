@@ -47,6 +47,7 @@ interface UserItem {
   id: number
   name: string
   email: string
+  phone_number?: string
   is_verified: boolean
   is_admin: boolean
   created_at: string
@@ -814,6 +815,7 @@ function AdminRouteComponent() {
                   <tr>
                     <th className="p-4">User Name</th>
                     <th className="p-4">Email Address</th>
+                    <th className="p-4">Phone / WhatsApp</th>
                     <th className="p-4">Registered Date</th>
                     <th className="p-4">Role</th>
                     <th className="p-4 text-right">Actions</th>
@@ -823,7 +825,26 @@ function AdminRouteComponent() {
                   {usersList.map((usr) => (
                     <tr key={usr.id} className="hover:bg-white/5 transition-colors">
                       <td className="p-4 font-medium text-white">{usr.name}</td>
-                      <td className="p-4 font-mono text-white/70">{usr.email}</td>
+                      <td className="p-4 font-mono text-white/70">
+                        <a href={`mailto:${usr.email}`} className="hover:text-gold transition-colors">
+                          {usr.email}
+                        </a>
+                      </td>
+                      <td className="p-4 font-mono text-xs">
+                        {usr.phone_number && usr.phone_number !== 'Not Provided' ? (
+                          <a
+                            href={`https://wa.me/${usr.phone_number.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(usr.name)},%20this%20is%20GrahGanit%20support.`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-400 hover:underline flex items-center gap-1 font-semibold"
+                          >
+                            <span>{usr.phone_number}</span>
+                            <span className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.2 rounded">WA</span>
+                          </a>
+                        ) : (
+                          <span className="text-white/30 italic">Not provided</span>
+                        )}
+                      </td>
                       <td className="p-4 text-white/50">{new Date(usr.created_at).toLocaleDateString()}</td>
                       <td className="p-4">
                         {usr.is_admin ? (

@@ -223,13 +223,14 @@ def delete_announcement(announcement_id: int, db: Session = Depends(get_db)):
 # ─── 5. User Management & Admin Promotion ─────────────────────────────────────
 @router.get("/users")
 def list_users(db: Session = Depends(get_db)):
-    """Lists registered users for Admin inspection."""
+    """Lists registered users with email and phone numbers for Admin inspection."""
     users = db.query(User).order_by(User.created_at.desc()).limit(100).all()
     return [
         {
             "id": u.id,
             "name": u.name or "User",
             "email": u.email,
+            "phone_number": u.phone_number or "Not Provided",
             "is_verified": u.is_verified,
             "is_admin": u.is_admin,
             "created_at": u.created_at
