@@ -170,44 +170,76 @@ At **GrahGanit**, our dual numerology engine combines the structural clarity of 
             db.commit()
             print("[SEED] Initial site announcement populated.")
 
-        # 4. Seed Consultation Tiers if none exist
+        # 4. Seed / Synchronize Consultation Tiers
         from backend.models.schemas import ConsultationTier
-        if db.query(ConsultationTier).count() == 0:
-            tiers = [
-                ConsultationTier(
-                    tier_key="silver",
-                    title="Vedic Life Blueprint",
-                    price_inr=1499,
-                    duration="30 Minutes",
-                    description="Detailed analysis of natal chart, Moon sign, Lagna & primary planetary Yogas.",
-                    features=["Birth Chart (Kundali) Analysis", "Moon Sign & Lagna Insights", "Current Dasha Breakdown", "Q&A Session (2 Questions)"],
-                    is_popular=False,
-                    is_active=True
-                ),
-                ConsultationTier(
-                    tier_key="gold",
-                    title="Complete Transit & Remedy Guide",
-                    price_inr=2999,
-                    duration="60 Minutes",
-                    description="Comprehensive breakdown of planetary transits, Saturn/Rahu Sade Sati, career & marriage timing.",
-                    features=["Full 12-House Kundli Analysis", "Sade Sati & Rahu-Ketu Assessment", "Career & Wealth Guidance", "Custom Gemstone & Mantra Remedies", "Q&A Session (Unlimited)"],
-                    is_popular=True,
-                    is_active=True
-                ),
-                ConsultationTier(
-                    tier_key="platinum",
-                    title="Executive Cosmic Consultation",
-                    price_inr=4999,
-                    duration="90 Minutes",
-                    description="In-depth consultation combining Vedic Kundali, Synastry Compatibility, and Business/Financial Timing.",
-                    features=["Dual Birth Chart Synastry", "Business & Investment Timing", "Personalized Gemstone Recommendation", "Recorded Audio & PDF Report", "VIP Follow-up Session"],
-                    is_popular=False,
-                    is_active=True
-                )
-            ]
-            db.add_all(tiers)
-            db.commit()
-            print("[SEED] Consultation tiers populated successfully.")
+        live_tiers = [
+            {
+                "tier_key": "career",
+                "title": "Career Guidance",
+                "price_inr": 999,
+                "duration": "45 Minutes",
+                "description": "Plot planetary positions governing Tenth house structures, job switches & promotions.",
+                "features": ["Tenth House Karma & Profession Analysis", "Job Switch & Promotion Timing", "Office Politics & Boss Dynamics", "Custom Gemstone & Remedy Guide"],
+                "is_popular": False,
+                "is_active": True
+            },
+            {
+                "tier_key": "marriage",
+                "title": "Marriage & Relationship",
+                "price_inr": 1499,
+                "duration": "60 Minutes",
+                "description": "Review Venus, Moon, and Seventh house marriage dynamics & synastry compatibility.",
+                "features": ["Seventh House Synastry Compatibility", "Marriage Timing & Partner Characteristics", "Venus & Mangal Dosha Assessment", "Relationship Dispute Remediation"],
+                "is_popular": False,
+                "is_active": True
+            },
+            {
+                "tier_key": "finance",
+                "title": "Business & Finance",
+                "price_inr": 1499,
+                "duration": "60 Minutes",
+                "description": "Identify auspicious periods for financial launches, investments & partnerships.",
+                "features": ["Second & Eleventh House Wealth Yogas", "Business Launch & Partnership Timing", "Financial Investment Risk Windows", "Lakshmi & Kubera Mantras"],
+                "is_popular": False,
+                "is_active": True
+            },
+            {
+                "tier_key": "health",
+                "title": "Health & Spiritual Guidance",
+                "price_inr": 999,
+                "duration": "45 Minutes",
+                "description": "Analyze Sixth house transits and design karmic adjustments & energetic remedies.",
+                "features": ["Sixth & Eighth House Transit Analysis", "Chakra Alignment & Energetic Remedies", "Ayurvedic & Mindful Routines", "Mahamrityunjaya Mantra Guide"],
+                "is_popular": False,
+                "is_active": True
+            },
+            {
+                "tier_key": "life",
+                "title": "Complete Life Reading",
+                "price_inr": 2499,
+                "duration": "90 Minutes",
+                "description": "Full 360° birth chart transit briefing, Vimshottari Dasha, Sade Sati & 5-year outlook.",
+                "features": ["Full 12-House Kundali & Lagna Analysis", "Sade Sati, Rahu-Ketu & Dasha Breakdown", "Career, Wealth & Marriage Synchronization", "Custom Gemstone, Yantra & Remedy Plan", "Unlimited Q&A & Session Audio Notes"],
+                "is_popular": True,
+                "is_active": True
+            }
+        ]
+
+        for t_data in live_tiers:
+            existing = db.query(ConsultationTier).filter(ConsultationTier.tier_key == t_data["tier_key"]).first()
+            if not existing:
+                new_tier = ConsultationTier(**t_data)
+                db.add(new_tier)
+            else:
+                existing.title = t_data["title"]
+                existing.price_inr = t_data["price_inr"]
+                existing.duration = t_data["duration"]
+                existing.description = t_data["description"]
+                existing.features = t_data["features"]
+                existing.is_popular = t_data["is_popular"]
+                existing.is_active = True
+        db.commit()
+        print("[SEED] Consultation tiers synchronized successfully.")
 
         # 5. Seed Testimonials if none exist
         from backend.models.schemas import Testimonial

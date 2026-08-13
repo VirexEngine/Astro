@@ -748,15 +748,17 @@ function AdminRouteComponent() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { key: 'silver', title: 'Vedic Life Blueprint', defaultPrice: 1499, duration: '30 Minutes', badge: 'BASIC' },
-                { key: 'gold', title: 'Complete Transit & Remedy Guide', defaultPrice: 2999, duration: '60 Minutes', badge: 'MOST POPULAR' },
-                { key: 'platinum', title: 'Executive Cosmic Consultation', defaultPrice: 4999, duration: '90 Minutes', badge: 'VIP EXECUTIVE' },
+                { key: 'career', title: 'Career Guidance', defaultPrice: 999, duration: '45 Minutes', badge: 'CAREER & JOBS' },
+                { key: 'marriage', title: 'Marriage & Relationship', defaultPrice: 1499, duration: '60 Minutes', badge: 'SYNASTRY & LOVE' },
+                { key: 'finance', title: 'Business & Finance', defaultPrice: 1499, duration: '60 Minutes', badge: 'WEALTH & LAUNCH' },
+                { key: 'health', title: 'Health & Spiritual Guidance', defaultPrice: 999, duration: '45 Minutes', badge: 'WELLNESS & MANTRAS' },
+                { key: 'life', title: 'Complete Life Reading', defaultPrice: 2499, duration: '90 Minutes', badge: 'MOST POPULAR' },
               ].map((tier) => (
                 <div key={tier.key} className="glass-strong p-6 rounded-2xl border border-white/10 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full bg-gold/10 text-gold text-[10px] font-mono border border-gold/20">
+                    <span className="px-2.5 py-0.5 rounded-full bg-gold/10 text-gold text-[10px] font-mono border border-gold/20 font-bold">
                       {tier.badge}
                     </span>
                     <span className="text-xs text-white/40 font-mono">Key: {tier.key}</span>
@@ -787,10 +789,13 @@ function AdminRouteComponent() {
                             duration: tier.duration,
                             is_active: true
                           })
-                        }).then(() => alert(`Price updated to ₹${newPrice} successfully!`))
+                        }).then(() => {
+                          alert(`Price updated to ₹${newPrice} successfully!`);
+                          fetchDashboardData();
+                        })
                       }
                     }}
-                    className="w-full bg-gold/10 hover:bg-gold/20 border border-gold/30 text-gold font-semibold text-xs py-2 rounded-xl transition-all"
+                    className="w-full bg-gold/10 hover:bg-gold/20 border border-gold/30 text-gold font-semibold text-xs py-2 rounded-xl transition-all cursor-pointer"
                   >
                     Edit Package Price
                   </button>
