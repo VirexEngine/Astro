@@ -17,10 +17,45 @@ class EmailService:
 
     @staticmethod
     def _send_email(to_email: str, subject: str, html_body: str, text_body: str) -> bool:
-        resend_api_key = os.getenv("RESEND_API_KEY", "").strip()
-        brevo_api_key = os.getenv("BREVO_API_KEY", "").strip()
+        smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com").strip()
+        smtp_user = os.getenv("SMTP_USERNAME", "grahganit2026@gmail.com").strip()
+        smtp_pass = os.getenv("SMTP_PASSWORD", "ivhnmhrarmwtzxkc").strip()
+        email_from = os.getenv("EMAIL_FROM", f"GrahGanit Observatory <{smtp_user}>").strip()
 
-        # Strategy 1: High-Speed Resend REST API (HTTPS Port 443)
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"] = email_from
+        msg["To"] = to_email
+        msg.attach(MIMEText(text_body, "plain", "utf-8"))
+        msg.attach(MIMEText(html_body, "html", "utf-8"))
+
+        # Strategy 1: Direct High-Speed Gmail SMTP SSL (Port 465)
+        try:
+            print(f"[SMTP SSL 465 DISPATCH] Sending to {to_email} via {smtp_host}:465...")
+            with smtplib.SMTP_SSL(smtp_host, 465, timeout=7) as server:
+                server.login(smtp_user, smtp_pass)
+                server.sendmail(email_from, to_email, msg.as_string())
+            logger.info(f"[SUCCESS SMTP 465] Email delivered to {to_email}")
+            print(f"[SUCCESS SMTP 465] Email delivered to {to_email}")
+            return True
+        except Exception as err_ssl:
+            print(f"[SMTP 465 FAILED] Retrying via TLS 587: {err_ssl}")
+
+        # Strategy 2: Gmail SMTP TLS (Port 587 Fallback)
+        try:
+            print(f"[SMTP TLS 587 FALLBACK] Sending to {to_email} via {smtp_host}:587...")
+            with smtplib.SMTP(smtp_host, 587, timeout=7) as server:
+                server.starttls()
+                server.login(smtp_user, smtp_pass)
+                server.sendmail(email_from, to_email, msg.as_string())
+            logger.info(f"[SUCCESS SMTP 587] Email delivered to {to_email}")
+            print(f"[SUCCESS SMTP 587] Email delivered to {to_email}")
+            return True
+        except Exception as err_tls:
+            print(f"[SMTP TLS 587 EXCEPTION] {err_tls}")
+
+        # Strategy 3: Resend HTTP API (HTTPS Port 443 Fallback)
+        resend_api_key = os.getenv("RESEND_API_KEY", "").strip()
         if resend_api_key:
             try:
                 print(f"[RESEND HTTP API DISPATCH] Sending to {to_email} via HTTPS Port 443...")
@@ -48,70 +83,7 @@ class EmailService:
             except Exception as err_resend:
                 print(f"[RESEND HTTP API EXCEPTION] {err_resend}")
 
-        # Strategy 2: Brevo (Sendinblue) REST API (HTTPS Port 443)
-        if brevo_api_key:
-            try:
-                print(f"[BREVO HTTP API DISPATCH] Sending to {to_email} via HTTPS Port 443...")
-                resp = requests.post(
-                    "https://api.brevo.com/v3/smtp/email",
-                    headers={
-                        "api-key": brevo_api_key,
-                        "Content-Type": "application/json",
-                    },
-                    json={
-                        "sender": {"name": "GrahGanit Observatory", "email": "grahganit2026@gmail.com"},
-                        "to": [{"email": to_email}],
-                        "subject": subject,
-                        "htmlContent": html_body,
-                        "textContent": text_body,
-                    },
-                    timeout=5,
-                )
-                if resp.status_code in (200, 201):
-                    logger.info(f"[SUCCESS BREVO] Email delivered to {to_email}")
-                    print(f"[SUCCESS BREVO] Email delivered to {to_email}")
-                    return True
-                else:
-                    print(f"[BREVO HTTP API WARNING] Status {resp.status_code}: {resp.text}")
-            except Exception as err_brevo:
-                print(f"[BREVO HTTP API EXCEPTION] {err_brevo}")
-
-        # Strategy 3: Direct Gmail SMTP SSL (Port 465) / TLS (Port 587)
-        smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com").strip()
-        smtp_user = os.getenv("SMTP_USERNAME", "grahganit2026@gmail.com").strip()
-        smtp_pass = os.getenv("SMTP_PASSWORD", "ivhnmhrarmwtzxkc").strip()
-        email_from = os.getenv("EMAIL_FROM", f"GrahGanit Observatory <{smtp_user}>").strip()
-
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = subject
-        msg["From"] = email_from
-        msg["To"] = to_email
-        msg.attach(MIMEText(text_body, "plain", "utf-8"))
-        msg.attach(MIMEText(html_body, "html", "utf-8"))
-
-        try:
-            print(f"[SMTP SSL 465 DISPATCH] Sending to {to_email} via {smtp_host}:465...")
-            with smtplib.SMTP_SSL(smtp_host, 465, timeout=7) as server:
-                server.login(smtp_user, smtp_pass)
-                server.sendmail(email_from, to_email, msg.as_string())
-            logger.info(f"[SUCCESS SMTP 465] Email delivered to {to_email}")
-            print(f"[SUCCESS SMTP 465] Email delivered to {to_email}")
-            return True
-        except Exception as err_ssl:
-            print(f"[SMTP 465 FAILED] Retrying via TLS 587: {err_ssl}")
-
-        try:
-            print(f"[SMTP TLS 587 FALLBACK] Sending to {to_email} via {smtp_host}:587...")
-            with smtplib.SMTP(smtp_host, 587, timeout=7) as server:
-                server.starttls()
-                server.login(smtp_user, smtp_pass)
-                server.sendmail(email_from, to_email, msg.as_string())
-            logger.info(f"[SUCCESS SMTP 587] Email delivered to {to_email}")
-            print(f"[SUCCESS SMTP 587] Email delivered to {to_email}")
-            return True
-        except Exception as err_tls:
-            print(f"[CRITICAL SMTP ERROR] Both SSL 465 and TLS 587 failed: {err_tls}")
-            return False
+        return False
 
     @staticmethod
     def send_otp_email(to_email: str, otp_code: str) -> bool:
