@@ -282,6 +282,8 @@ function RouteComponent() {
 
   useEffect(() => {
     syncState();
+    // Warm up backend API immediately on page load
+    fetch('/health').catch(() => {});
     window.addEventListener('grahganit_profile_sync', syncState);
     return () => window.removeEventListener('grahganit_profile_sync', syncState);
   }, []);
