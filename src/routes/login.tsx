@@ -468,6 +468,10 @@ function RouteComponent() {
           dob: p.dob,
           time: p.time || '12:00',
           place: p.place || 'Delhi, India',
+          moonSign: p.moon_sign,
+          ascendant: p.ascendant,
+          nakshatra: p.nakshatra,
+          lifePathNumber: p.life_path_number,
         });
         saveUserProfile(userProfile);
         setAuthUser(null);
@@ -510,6 +514,10 @@ function RouteComponent() {
           dob: p.dob,
           time: p.time || '12:00',
           place: p.place || 'Delhi, India',
+          moonSign: p.moon_sign,
+          ascendant: p.ascendant,
+          nakshatra: p.nakshatra,
+          lifePathNumber: p.life_path_number,
         });
         saveUserProfile(userProfile);
         setAuthUser(null);
@@ -592,13 +600,23 @@ function RouteComponent() {
                       Welcome, <span style={{ color: '#d4af78' }}>{profile.name}</span>
                     </h2>
                   </div>
-                  <button onClick={handleLogout}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono text-red-400 hover:text-red-300 cursor-pointer transition-colors"
-                    style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.12)' }}>
-                    <LogOut className="w-3.5 h-3.5" /> Sign out
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setAuthUser({ name: profile.name, email: profile.email })}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono text-gold-soft hover:text-gold cursor-pointer transition-colors"
+                      style={{ background: 'rgba(212,175,78,0.08)', border: '1px solid rgba(212,175,78,0.2)' }}
+                      title="Adjust your birth date, time, or location"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-gold" /> Edit Details
+                    </button>
+                    <button onClick={handleLogout}
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono text-red-400 hover:text-red-300 cursor-pointer transition-colors"
+                      style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.12)' }}>
+                      <LogOut className="w-3.5 h-3.5" /> Sign out
+                    </button>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
                   {[
                     { label: 'Moon Sign', val: profile.moonSign },
                     { label: 'Ascendant', val: profile.ascendant },
@@ -611,6 +629,16 @@ function RouteComponent() {
                       <span className="text-sm text-white font-medium">{c.val}</span>
                     </div>
                   ))}
+                </div>
+                <div className="p-3.5 rounded-2xl mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono"
+                  style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className="flex items-center gap-2 text-white/60">
+                    <Calendar className="w-3.5 h-3.5 text-gold" />
+                    <span>Birth: <strong className="text-white font-medium">{profile.dob}</strong> @ <strong className="text-white font-medium">{profile.time}</strong></span>
+                  </div>
+                  <div className="text-white/60 truncate max-w-[240px]">
+                    📍 <span className="text-white font-medium">{profile.place}</span>
+                  </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {[

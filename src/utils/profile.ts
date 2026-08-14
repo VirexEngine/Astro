@@ -145,18 +145,23 @@ export const generateCosmicProfile = (details: {
   time: string;
   place: string;
   backendChart?: any;
+  moonSign?: string;
+  ascendant?: string;
+  nakshatra?: string;
+  lifePathNumber?: number;
 }): UserProfile => {
   const isoDate = normalizeDateToISO(details.dob);
   const [year, month, day] = isoDate.split('-').map(n => parseInt(n, 10));
   const time24 = normalizeTime24(details.time);
   const hour = parseInt(time24.split(':')[0], 10) || 12;
 
-  // Use Swiss Ephemeris data from backend if available!
-  let moonSign = '';
-  let ascendant = '';
-  let nakshatra = '';
+  // 1. Check if signs are already provided accurately
+  let moonSign = details.moonSign || '';
+  let ascendant = details.ascendant || '';
+  let nakshatra = details.nakshatra || '';
 
-  if (details.backendChart) {
+  // 2. Use Swiss Ephemeris data from backend chart if available
+  if ((!moonSign || !ascendant || !nakshatra) && details.backendChart) {
     ascendant = details.backendChart.ascendant?.sign || '';
     const moonObj = details.backendChart.planets?.find((p: any) => p.name === 'Moon');
     if (moonObj) {
@@ -165,7 +170,7 @@ export const generateCosmicProfile = (details: {
     }
   }
 
-  // Sidereal Vedic calculation fallback if backend is un-reachable
+  // 3. Fallback calculation if neither is present
   if (!moonSign || !ascendant || !nakshatra) {
     const a = Math.floor((14 - month) / 12);
     const y = year + 4800 - a;
@@ -182,12 +187,12 @@ export const generateCosmicProfile = (details: {
     const ascDegree = (sunDeg + (hour * 15) + (day * 0.98) + 360000) % 360;
     const ascIndex = Math.floor(ascDegree / 30) % 12;
 
-    moonSign = ZODIAC_SIGNS[moonIndex] || 'Leo';
-    ascendant = ZODIAC_SIGNS[ascIndex] || 'Libra';
-    nakshatra = NAKSHATRAS[nakIndex] || 'Purva Phalguni';
+    moonSign = moonSign || ZODIAC_SIGNS[moonIndex] || 'Leo';
+    ascendant = ascendant || ZODIAC_SIGNS[ascIndex] || 'Libra';
+    nakshatra = nakshatra || NAKSHATRAS[nakIndex] || 'Purva Phalguni';
   }
 
-  const lifePathNumber = calculateLifePath(details.dob);
+  const lifePathNumber = details.lifePathNumber || calculateLifePath(details.dob);
   const soulNumber = calculateSoulNumber(details.name);
   const primaryZodiac = ZODIAC_SIGNS[(month - 1) % 12] || 'Virgo';
 
@@ -201,6 +206,7 @@ export const generateCosmicProfile = (details: {
 
   return {
     ...details,
+    phoneNumber: details.phoneNumber || '',
     dob: isoDate,
     time: time24,
     photoUrl: undefined,
@@ -258,22 +264,7 @@ export const getActiveProfile = (): UserProfile | null => {
   if (!data) return null;
   try {
     const profile: UserProfile = JSON.parse(data);
-    if (profile && profile.dob) {
-      const repaired = generateCosmicProfile({
-        name: profile.name,
-        email: profile.email,
-        gender: profile.gender || 'Male',
-        country: profile.country || 'India',
-        language: profile.language || 'English',
-        dob: profile.dob,
-        time: profile.time || '12:00',
-        place: profile.place || 'Delhi, India',
-        backendChart: (profile as any).backendChart,
-      });
-      repaired.isAdmin = profile.isAdmin;
-      repaired.preferences = profile.preferences || repaired.preferences;
-      return repaired;
-    }
+    if (!profile || !profile.name || !profile.email) return null;
     return profile;
   } catch (e) {
     return null;
