@@ -146,7 +146,7 @@ export const BookingWizard: React.FC = () => {
 
       // 2. Open Razorpay Checkout modal
       const options = {
-        key: orderData.key_id || 'rzp_test_TPL9nsvndVFYy5',
+        key: orderData.key_id || 'rzp_live_TPT4WReuZDUFF9',
         amount: orderData.amount,
         currency: orderData.currency || 'INR',
         name: 'GrahGanit Observatory',

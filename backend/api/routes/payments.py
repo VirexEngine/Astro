@@ -48,8 +48,8 @@ def create_order(payload: CreateOrderRequest, db: Session = Depends(get_db)):
     """
     Creates a new Razorpay order and saves pending booking details in the database.
     """
-    key_id = os.getenv("RAZORPAY_KEY_ID", "").strip()
-    key_secret = os.getenv("RAZORPAY_KEY_SECRET", "").strip()
+    key_id = os.getenv("RAZORPAY_KEY_ID", "rzp_live_TPT4WReuZDUFF9").strip()
+    key_secret = os.getenv("RAZORPAY_KEY_SECRET", "fPnZtbw5MliGBu4nG4e5hagz").strip()
 
     amount_in_paise = int(payload.amount * 100)
     receipt_id = f"grah_{int(time.time())}_{payload.plan_id[:4]}"
@@ -129,7 +129,7 @@ def verify_payment(
     Verifies Razorpay HMAC SHA256 payment signature and confirms consultation booking.
     Dispatches appointment confirmation email asynchronously.
     """
-    key_secret = os.getenv("RAZORPAY_KEY_SECRET", "").strip()
+    key_secret = os.getenv("RAZORPAY_KEY_SECRET", "fPnZtbw5MliGBu4nG4e5hagz").strip()
 
     # Find booking record
     booking = db.query(ConsultationBooking).filter(
