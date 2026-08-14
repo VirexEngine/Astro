@@ -71,6 +71,7 @@ class LoginRequest(BaseModel):
 class UserProfileCreate(BaseModel):
     name: str
     email: str
+    phone_number: Optional[str] = None
     gender: Optional[str] = None
     country: Optional[str] = None
     language: Optional[str] = None
@@ -270,12 +271,14 @@ def save_user_profile(data: UserProfileCreate, db: Session = Depends(get_db)):
     try:
         user = db.query(User).filter(User.email == data.email).first()
         if not user:
-            user = User(email=data.email, name=data.name, is_verified=True)
+            user = User(email=data.email, name=data.name, phone_number=data.phone_number, is_verified=True)
             db.add(user)
             db.commit()
             db.refresh(user)
         else:
             user.name = data.name
+            if data.phone_number:
+                user.phone_number = data.phone_number
             db.commit()
 
         birth_detail = db.query(BirthDetail).filter(BirthDetail.user_id == user.id).first()

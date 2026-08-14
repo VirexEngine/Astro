@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { saveUserProfile, generateCosmicProfile, fetchBackendChart, UserProfile } from '@/utils/profile';
 import { searchCities, CitySearchResult } from '@/utils/locationService';
-import { ChevronRight, ChevronLeft, Sparkles, Check, Heart, Shield, Award, CalendarDays, Loader2 } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Sparkles, Check, Heart, Shield, Award, CalendarDays, Loader2, Phone } from 'lucide-react';
 import { DobInput } from '../common/DobInput';
 
 interface OnboardingWizardProps {
@@ -24,6 +24,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: userName || '',
+    phoneNumber: '',
     gender: 'Male',
     country: 'India',
     language: 'English',
@@ -203,6 +204,20 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-white/3 border border-white/10 focus:border-gold/30 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none placeholder-white/20 transition-all font-sans"
                   />
+                </div>
+
+                <div>
+                  <label className="text-[9px] font-mono text-white/40 uppercase block mb-1">Phone / WhatsApp Number</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gold/40" />
+                    <input
+                      type="tel"
+                      placeholder="+91 98765 43210"
+                      value={formData.phoneNumber}
+                      onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                      className="w-full bg-white/3 border border-white/10 focus:border-gold/30 rounded-xl pl-9 pr-3.5 py-2.5 text-xs text-white outline-none placeholder-white/20 transition-all font-sans"
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">

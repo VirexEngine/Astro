@@ -1,6 +1,7 @@
 export interface UserProfile {
   name: string;
   email: string;
+  phoneNumber?: string;
   isAdmin?: boolean;
   photoUrl?: string;
   gender: string;
@@ -136,6 +137,7 @@ export const fetchBackendChart = async (details: {
 export const generateCosmicProfile = (details: {
   name: string;
   email: string;
+  phoneNumber?: string;
   gender: string;
   country: string;
   language: string;
@@ -233,6 +235,7 @@ export const saveUserProfile = (profile: UserProfile) => {
     body: JSON.stringify({
       name: profile.name,
       email: profile.email,
+      phone_number: profile.phoneNumber || '',
       gender: profile.gender,
       country: profile.country,
       language: profile.language,
