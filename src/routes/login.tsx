@@ -4,7 +4,7 @@ import { Navbar } from '@/components/site/Navbar'
 import { FloatingActions } from '@/components/site/Sections'
 import { OnboardingWizard } from '@/components/authentication/OnboardingWizard'
 import { GoogleAuthButton } from '@/components/authentication/GoogleAuthButton'
-import { getActiveProfile, clearUserProfile, UserProfile } from '@/utils/profile'
+import { getActiveProfile, clearUserProfile, saveUserProfile, generateCosmicProfile, UserProfile } from '@/utils/profile'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Compass, Star, Calendar, ArrowRight, Heart, LogOut,
@@ -454,7 +454,27 @@ function RouteComponent() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Sign in failed.');
-      setAuthUser({ name: data.user.name, email: data.user.email });
+
+      // If user already has a saved birth profile, restore it directly to dashboard
+      if (data.user.has_profile && data.user.profile?.dob) {
+        const p = data.user.profile;
+        const userProfile = generateCosmicProfile({
+          name: p.name || data.user.name,
+          email: p.email || data.user.email,
+          phoneNumber: p.phone_number || data.user.phone_number || '',
+          gender: p.gender || 'Male',
+          country: p.country || 'India',
+          language: p.language || 'English',
+          dob: p.dob,
+          time: p.time || '12:00',
+          place: p.place || 'Delhi, India',
+        });
+        saveUserProfile(userProfile);
+        setAuthUser(null);
+        syncState();
+      } else {
+        setAuthUser({ name: data.user.name, email: data.user.email });
+      }
 
       if (data.user.is_admin || email.trim() === 'admin@grahganit.in') {
         navigate({ to: '/admin' });
@@ -470,16 +490,38 @@ function RouteComponent() {
     setFormLoading(true);
     try {
       const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
-      await fetch(`${apiOrigin}/api/user/google-auth`, {
+      const res = await fetch(`${apiOrigin}/api/user/google-auth`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(googleUser),
       });
+      const data = await res.json();
+
+      // If existing user already has a saved birth profile in DB, restore directly!
+      if (data?.user?.has_profile && data?.user?.profile?.dob) {
+        const p = data.user.profile;
+        const userProfile = generateCosmicProfile({
+          name: p.name || googleUser.name,
+          email: p.email || googleUser.email,
+          phoneNumber: p.phone_number || '',
+          gender: p.gender || 'Male',
+          country: p.country || 'India',
+          language: p.language || 'English',
+          dob: p.dob,
+          time: p.time || '12:00',
+          place: p.place || 'Delhi, India',
+        });
+        saveUserProfile(userProfile);
+        setAuthUser(null);
+        syncState();
+      } else {
+        setAuthUser({ name: googleUser.name, email: googleUser.email });
+      }
     } catch (e) {
       console.warn('Google backend sync notice:', e);
+      setAuthUser({ name: googleUser.name, email: googleUser.email });
     } finally {
       setFormLoading(false);
-      setAuthUser({ name: googleUser.name, email: googleUser.email });
     }
   };
 

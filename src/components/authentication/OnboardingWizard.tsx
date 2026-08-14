@@ -37,7 +37,31 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
     if (userName) {
       setFormData((prev) => ({ ...prev, name: userName }));
     }
-  }, [userName]);
+    if (userEmail) {
+      const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
+      fetch(`${apiOrigin}/api/user/profile/${encodeURIComponent(userEmail.trim())}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && (data.name || data.phone_number || data.date_of_birth)) {
+            setFormData((prev) => ({
+              ...prev,
+              name: data.name || prev.name,
+              phoneNumber: data.phone_number || prev.phoneNumber,
+              gender: data.gender || prev.gender,
+              country: data.country || prev.country,
+              language: data.language || prev.language,
+              dob: data.date_of_birth || prev.dob,
+              time: data.time_of_birth || prev.time,
+              place: data.place_of_birth || prev.place,
+            }));
+            if (data.place_of_birth) {
+              setAutocompleteInput(data.place_of_birth);
+            }
+          }
+        })
+        .catch((err) => console.warn('Profile prefill notice:', err));
+    }
+  }, [userName, userEmail]);
 
   const [autocompleteInput, setAutocompleteInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
