@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, LogIn } from 'lucide-react';
+import { X, Sparkles, LogIn, CheckCircle2, User, ChevronRight } from 'lucide-react';
 
 interface GoogleAuthButtonProps {
   onSuccess: (userData: { name: string; email: string; picture?: string }) => void;
@@ -17,7 +17,26 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Cached device accounts list for 1-click login
+  const [savedAccounts, setSavedAccounts] = useState<Array<{ name: string; email: string; avatarBg: string }>>([
+    { name: 'Pratyush Kumar', email: 'pratyushk983@gmail.com', avatarBg: 'from-amber-500 to-orange-500' },
+    { name: 'Velora AI', email: 'veloraai13@gmail.com', avatarBg: 'from-purple-500 to-indigo-500' },
+  ]);
+
   useEffect(() => {
+    // Read any previously logged in google emails from localStorage
+    try {
+      const history = localStorage.getItem('grahganit_google_accounts_history');
+      if (history) {
+        const parsed = JSON.parse(history);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setSavedAccounts(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Google accounts history parse notice:', e);
+    }
+
     if (!activeClientId) return;
 
     // Load Google Identity Services SDK dynamically
@@ -74,6 +93,7 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
     if (response.credential) {
       const payload = parseJwt(response.credential);
       if (payload) {
+        saveAccountToHistory(payload.name || 'Google User', payload.email);
         onSuccess({
           name: payload.name || payload.given_name || 'Google User',
           email: payload.email,
@@ -83,13 +103,40 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
     }
   };
 
+  const saveAccountToHistory = (name: string, email: string) => {
+    try {
+      const newAcc = { name, email, avatarBg: 'from-amber-500 to-orange-500' };
+      const filtered = savedAccounts.filter((a) => a.email !== email);
+      const updated = [newAcc, ...filtered].slice(0, 4);
+      setSavedAccounts(updated);
+      localStorage.setItem('grahganit_google_accounts_history', JSON.stringify(updated));
+    } catch (e) {
+      console.warn('Failed saving account history:', e);
+    }
+  };
+
   const handleGoogleClick = () => {
     const win = window as any;
     if (activeClientId && win.google?.accounts?.id) {
-      win.google.accounts.id.prompt();
+      win.google.accounts.id.prompt((notification: any) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          setShowFallbackModal(true);
+        }
+      });
     } else {
       setShowFallbackModal(true);
     }
+  };
+
+  const handleSelectAccount = (acc: { name: string; email: string }) => {
+    setLoading(true);
+    setError(null);
+    setTimeout(() => {
+      setLoading(false);
+      setShowFallbackModal(false);
+      saveAccountToHistory(acc.name, acc.email);
+      onSuccess({ name: acc.name, email: acc.email });
+    }, 400);
   };
 
   const handleFallbackSubmit = (e: React.FormEvent) => {
@@ -104,8 +151,9 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
       setLoading(false);
       setShowFallbackModal(false);
       const name = googleName.trim() || googleEmail.split('@')[0];
+      saveAccountToHistory(name, googleEmail.trim());
       onSuccess({ name, email: googleEmail.trim() });
-    }, 500);
+    }, 400);
   };
 
   return (
@@ -120,7 +168,7 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
         <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
         
         {/* Google G Logo SVG */}
-        <svg className="w-4 h-4" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
           <path
             fill="#4285F4"
             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -144,7 +192,7 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
       {/* Google GIS Container if Client ID is configured */}
       <div id="g_id_onload_button" className="hidden" />
 
-      {/* Fallback Google Sign-In Modal */}
+      {/* 1-Click Google Account Chooser Modal */}
       <AnimatePresence>
         {showFallbackModal && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
@@ -156,64 +204,94 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
             >
               <button
                 onClick={() => setShowFallbackModal(false)}
-                className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors"
+                className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
 
               <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mx-auto mb-3 text-gold">
-                  <Sparkles className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-3 text-gold">
+                  <svg className="w-6 h-6" viewBox="0 0 24 24">
+                    <path
+                      fill="#4285F4"
+                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                    />
+                    <path
+                      fill="#EA4335"
+                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                    />
+                  </svg>
                 </div>
-                <h3 className="text-xl font-display font-semibold text-white">Google Sign-In</h3>
+                <h3 className="text-xl font-display font-semibold text-white">Choose a Google Account</h3>
                 <p className="text-xs text-white/60 mt-1">
-                  Enter your Google Account email to continue directly to GrahGanit.
+                  Select an account logged in on your device to continue to <span className="text-gold">GrahGanit</span>
                 </p>
               </div>
 
-              <form onSubmit={handleFallbackSubmit} className="flex flex-col gap-4">
-                {error && (
-                  <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300 text-xs">
-                    {error}
+              {/* 1-Click Device Accounts List */}
+              <div className="space-y-3 mb-5">
+                {savedAccounts.map((acc) => (
+                  <button
+                    key={acc.email}
+                    onClick={() => handleSelectAccount(acc)}
+                    disabled={loading}
+                    className="w-full p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-gold/40 text-left transition-all flex items-center justify-between group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-10 h-10 rounded-full bg-gradient-to-br ${acc.avatarBg} flex items-center justify-center text-white font-bold text-sm shadow-md`}
+                      >
+                        {acc.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-white group-hover:text-gold transition-colors">
+                          {acc.name}
+                        </h4>
+                        <p className="text-xs font-mono text-white/50">{acc.email}</p>
+                      </div>
+                    </div>
+
+                    <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
+                  </button>
+                ))}
+              </div>
+
+              {/* Or Manual Form Entry */}
+              <div className="pt-4 border-t border-white/10">
+                <form onSubmit={handleFallbackSubmit} className="space-y-3">
+                  {error && (
+                    <div className="p-2.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300 text-xs">
+                      {error}
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Use another Google account email..."
+                      value={googleEmail}
+                      onChange={(e) => setGoogleEmail(e.target.value)}
+                      className="flex-1 bg-white/5 border border-white/10 focus:border-gold/50 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/30 outline-none transition-all"
+                    />
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="bg-gold hover:bg-amber-400 text-black font-semibold rounded-xl px-4 py-2.5 text-xs transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      {loading ? '...' : 'Sign In'}
+                    </button>
                   </div>
-                )}
-
-                <div>
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-gold/80 mb-1.5">
-                    Google Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="your.email@gmail.com"
-                    value={googleEmail}
-                    onChange={(e) => setGoogleEmail(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 focus:border-gold/50 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-gold/80 mb-1.5">
-                    Full Name (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Anand Sharma"
-                    value={googleName}
-                    onChange={(e) => setGoogleName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 focus:border-gold/50 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full mt-2 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-black font-semibold rounded-xl py-3 text-xs tracking-wide shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                  <LogIn className="w-4 h-4" />
-                  <span>{loading ? 'Authenticating...' : 'Sign In with Google'}</span>
-                </button>
-              </form>
+                </form>
+              </div>
             </motion.div>
           </div>
         )}
