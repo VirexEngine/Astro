@@ -335,7 +335,8 @@ function RouteComponent() {
     setFormLoading(true);
 
     try {
-      const res = await fetch('/api/user/send-otp', {
+      const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
+      const res = await fetch(`${apiOrigin}/api/user/send-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -373,7 +374,8 @@ function RouteComponent() {
     setFormLoading(true);
 
     try {
-      const res = await fetch('/api/user/verify-otp', {
+      const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
+      const res = await fetch(`${apiOrigin}/api/user/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -408,7 +410,8 @@ function RouteComponent() {
     setFormLoading(true);
 
     try {
-      const res = await fetch('/api/user/register', {
+      const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
+      const res = await fetch(`${apiOrigin}/api/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -443,7 +446,8 @@ function RouteComponent() {
     setFormLoading(true);
 
     try {
-      const res = await fetch('/api/user/login', {
+      const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
+      const res = await fetch(`${apiOrigin}/api/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim(), password })
@@ -465,7 +469,8 @@ function RouteComponent() {
   const handleGoogleAuthSuccess = async (googleUser: { name: string; email: string; picture?: string }) => {
     setFormLoading(true);
     try {
-      await fetch('/api/user/google-auth', {
+      const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
+      await fetch(`${apiOrigin}/api/user/google-auth`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(googleUser),
