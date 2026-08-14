@@ -29,6 +29,15 @@ export const HoroscopeCard: React.FC<HoroscopeCardProps> = ({
   const general = details.find((d) => d.category === 'General');
   const subs = details.filter((d) => d.category !== 'General');
 
+  // Helper to personalize prediction text dynamically
+  const formatPredictionText = (text: string) => {
+    const signsRegex = /^(Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces),?/i;
+    if (userName) {
+      return text.replace(signsRegex, `${userName},`);
+    }
+    return text.replace(signsRegex, `${sign},`);
+  };
+
   return (
     <div className="w-full flex flex-col gap-6">
       {/* General Forecast Card */}
@@ -39,10 +48,10 @@ export const HoroscopeCard: React.FC<HoroscopeCardProps> = ({
             <div>
               <h3 className="text-base font-display font-medium text-gradient-gold flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-gold" />
-                <span>{userName ? `${userName}'s Personal Forecast` : "Today's General Forecast"}</span>
+                <span>{userName ? `${userName}'s Personal ${sign} Reading` : `${sign} Celestial Forecast`}</span>
               </h3>
               <p className="text-[10px] text-white/40 mt-0.5 uppercase tracking-wider font-mono">
-                {sign} Daily Reading ({mood} Alignment)
+                {sign} Daily Astrological Alignment ({mood} Alignment)
               </p>
             </div>
             <button
@@ -53,7 +62,7 @@ export const HoroscopeCard: React.FC<HoroscopeCardProps> = ({
               <span>Why am I seeing this?</span>
             </button>
           </div>
-          <p className="text-sm text-white/80 leading-relaxed font-sans">{general.prediction}</p>
+          <p className="text-sm text-white/80 leading-relaxed font-sans">{formatPredictionText(general.prediction)}</p>
         </div>
       )}
 
@@ -87,7 +96,7 @@ export const HoroscopeCard: React.FC<HoroscopeCardProps> = ({
                 </button>
               </div>
 
-              <p className="text-xs text-white/70 leading-relaxed font-sans">{sub.prediction}</p>
+              <p className="text-xs text-white/70 leading-relaxed font-sans">{formatPredictionText(sub.prediction)}</p>
             </motion.div>
           );
         })}
