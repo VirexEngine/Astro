@@ -252,6 +252,7 @@ function AstrologicalPanel() {
 function RouteComponent() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [authUser, setAuthUser] = useState<{ name: string; email: string } | null>(null);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
 
   // Sign In vs Sign Up (Defaults to Sign Up if no user registered)
   const [isSignUp, setIsSignUp] = useState(true);
@@ -543,8 +544,17 @@ function RouteComponent() {
     }, 400);
   };
 
-  const handleOnboardingComplete = () => { setAuthUser(null); syncState(); };
-  const handleLogout = () => { clearUserProfile(); syncState(); };
+  const handleOnboardingComplete = () => {
+    setIsEditingProfile(false);
+    setAuthUser(null);
+    syncState();
+  };
+  const handleLogout = () => {
+    clearUserProfile();
+    setIsEditingProfile(false);
+    setAuthUser(null);
+    syncState();
+  };
 
   // Password strength calculation
   const getPasswordStrength = (pass: string) => {
@@ -586,7 +596,7 @@ function RouteComponent() {
         <AnimatePresence mode="wait">
 
           {/* ── Logged-in Dashboard ── */}
-          {profile && profile.dob ? (
+          {profile && profile.dob && !isEditingProfile ? (
             <motion.div key="dashboard"
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
               className="w-full flex items-center justify-center px-4 py-28"
@@ -602,7 +612,10 @@ function RouteComponent() {
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => setAuthUser({ name: profile.name, email: profile.email })}
+                      onClick={() => {
+                        setIsEditingProfile(true);
+                        setAuthUser({ name: profile.name, email: profile.email });
+                      }}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono text-gold-soft hover:text-gold cursor-pointer transition-colors"
                       style={{ background: 'rgba(212,175,78,0.08)', border: '1px solid rgba(212,175,78,0.2)' }}
                       title="Adjust your birth date, time, or location"
@@ -667,12 +680,16 @@ function RouteComponent() {
               </div>
             </motion.div>
 
-          ) : authUser ? (
+          ) : authUser || isEditingProfile ? (
             /* ── Onboarding / Birth Details ── */
             <motion.div key="onboarding" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="w-full flex items-center justify-center px-4 py-28">
               <div className="w-full max-w-xl">
-                <OnboardingWizard userName={authUser.name} userEmail={authUser.email} onComplete={handleOnboardingComplete} />
+                <OnboardingWizard
+                  userName={profile?.name || authUser?.name || ''}
+                  userEmail={profile?.email || authUser?.email || ''}
+                  onComplete={handleOnboardingComplete}
+                />
               </div>
             </motion.div>
 

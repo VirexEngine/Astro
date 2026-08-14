@@ -34,9 +34,35 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   });
 
   useEffect(() => {
+    // 1. Instant local storage pre-fill
+    try {
+      const cached = localStorage.getItem('grahganit_active_profile');
+      if (cached) {
+        const p = JSON.parse(cached);
+        if (p) {
+          setFormData((prev) => ({
+            ...prev,
+            name: p.name || prev.name,
+            phoneNumber: p.phoneNumber || prev.phoneNumber,
+            gender: p.gender || prev.gender,
+            country: p.country || prev.country,
+            language: p.language || prev.language,
+            dob: p.dob || prev.dob,
+            time: p.time || prev.time,
+            place: p.place || prev.place,
+          }));
+          if (p.place) {
+            setAutocompleteInput(p.place);
+          }
+        }
+      }
+    } catch (e) {}
+
     if (userName) {
       setFormData((prev) => ({ ...prev, name: userName }));
     }
+
+    // 2. Async database pre-fill
     if (userEmail) {
       const apiOrigin = typeof window !== 'undefined' && window.location.hostname === 'grahganit.in' ? 'https://www.grahganit.in' : '';
       fetch(`${apiOrigin}/api/user/profile/${encodeURIComponent(userEmail.trim())}`)
