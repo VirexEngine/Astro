@@ -18,10 +18,7 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
   const [error, setError] = useState<string | null>(null);
 
   // Cached device accounts list
-  const [savedAccounts, setSavedAccounts] = useState<Array<{ name: string; email: string; avatarBg: string }>>([
-    { name: 'Pratyush Kumar', email: 'pratyushk983@gmail.com', avatarBg: 'from-amber-500 to-orange-500' },
-    { name: 'Velora AI', email: 'veloraai13@gmail.com', avatarBg: 'from-purple-500 to-indigo-500' },
-  ]);
+  const [savedAccounts, setSavedAccounts] = useState<Array<{ name: string; email: string; avatarBg: string }>>([]);
 
   const tokenClientRef = useRef<any>(null);
 

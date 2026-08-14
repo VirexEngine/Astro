@@ -586,7 +586,7 @@ function RouteComponent() {
         <AnimatePresence mode="wait">
 
           {/* ── Logged-in Dashboard ── */}
-          {profile ? (
+          {profile && profile.dob ? (
             <motion.div key="dashboard"
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
               className="w-full flex items-center justify-center px-4 py-28"
