@@ -755,7 +755,7 @@ function RouteComponent() {
                                     required
                                     value={phoneNumber}
                                     onChange={e => setPhoneNumber(e.target.value)}
-                                    placeholder="+91 98765 43210"
+                                    placeholder="+91 1234567890"
                                     className="w-full pl-9 pr-3 py-2.5 rounded-xl text-sm outline-none bg-white/5 border border-white/10 text-white focus:border-amber-400/50"
                                   />
                                 </div>

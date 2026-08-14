@@ -207,17 +207,25 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-[9px] font-mono text-white/40 uppercase block mb-1">Phone / WhatsApp Number</label>
+                  <label className="text-[9px] font-mono text-white/40 uppercase block mb-1">
+                    Phone / WhatsApp Number <span className="text-amber-400">*</span>
+                  </label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gold/40" />
                     <input
                       type="tel"
-                      placeholder="+91 98765 43210"
+                      required
+                      placeholder="+91 1234567890"
                       value={formData.phoneNumber}
                       onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                       className="w-full bg-white/3 border border-white/10 focus:border-gold/30 rounded-xl pl-9 pr-3.5 py-2.5 text-xs text-white outline-none placeholder-white/20 transition-all font-sans"
                     />
                   </div>
+                  {!formData.phoneNumber && (
+                    <p className="text-[10px] text-amber-400/60 mt-1 font-mono">
+                      * Required to receive consultation & chart updates
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -476,7 +484,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
             <button
               onClick={handleNext}
               disabled={
-                (step === 2 && !formData.name) ||
+                (step === 2 && (!formData.name.trim() || !formData.phoneNumber.trim())) ||
                 (step === 3 && (!formData.dob || !formData.time))
               }
               className="px-5 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-xs text-white font-semibold transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"

@@ -705,7 +705,7 @@ export const BookingWizard: React.FC = () => {
                         <label className="text-[9px] font-mono text-white/40 uppercase block mb-1">Phone Number</label>
                         <input
                           type="tel"
-                          placeholder="e.g. +91 9876543210"
+                          placeholder="e.g. +91 1234567890"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           className="w-full bg-white/3 border border-white/10 focus:border-gold/30 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none placeholder-white/20 transition-all"

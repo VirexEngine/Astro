@@ -142,9 +142,9 @@ const INFO_CARDS = [
   {
     icon: <Phone className="h-6 w-6" />,
     label: "WhatsApp Assistance",
-    value: "+91 98765 43210",
+    value: "+91 1234567890",
     sub: "Mon–Sat, 10 AM – 7 PM IST",
-    href: "https://wa.me/919876543210",
+    href: "https://wa.me/911234567890",
     color: "from-emerald-500/20 to-teal-700/10",
     accent: "group-hover:text-emerald-400",
   },
@@ -406,7 +406,7 @@ function ContactForm() {
                     </label>
                     <input
                       type="tel"
-                      placeholder="+91 98765 43210 (For instant updates)"
+                      placeholder="+91 1234567890 (For instant updates)"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className={inputCls}
