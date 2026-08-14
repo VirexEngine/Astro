@@ -124,8 +124,7 @@ def send_otp(data: SendOTPRequest, background_tasks: BackgroundTasks, db: Sessio
     return {
         "status": "success",
         "message": f"Verification code sent to {email_key}. Check your inbox.",
-        "cooldown_seconds": 60,
-        "dev_otp": raw_otp
+        "cooldown_seconds": 60
     }
 
 

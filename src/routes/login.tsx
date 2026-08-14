@@ -349,13 +349,8 @@ function RouteComponent() {
       if (!res.ok) {
         throw new Error(data.detail || data.message || 'Error sending verification code.');
       }
-      if (data.dev_otp && typeof data.dev_otp === 'string') {
-        const digits = data.dev_otp.split('');
-        if (digits.length === 6) {
-          setOtpDigits(digits);
-        }
-      }
-      setFormSuccess(data.message || `Sacred verification code sent to ${email}`);
+      setFormSuccess(data.message || `Verification code sent to ${email}. Check your inbox.`);
+      setOtpDigits(['', '', '', '', '', '']);
       setCooldown(60);
       setRegStep(2);
     } catch (err: any) {
