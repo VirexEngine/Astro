@@ -29,31 +29,36 @@ class EmailService:
         msg.attach(MIMEText(text_body, "plain", "utf-8"))
         msg.attach(MIMEText(html_body, "html", "utf-8"))
 
-        # Strategy 1: Direct High-Speed Gmail SMTP TLS (Port 587 - Best for Cloud Servers)
+        # Strategy 1: Direct High-Speed Gmail SMTP TLS (Port 587)
         try:
-            print(f"[GMAIL SMTP 587] Sending to {to_email} via {smtp_host}:587...")
-            with smtplib.SMTP(smtp_host, 587, timeout=8) as server:
+            logger.info(f"[GMAIL SMTP 587] Connecting to {smtp_host}:587 for {to_email}...")
+            with smtplib.SMTP(smtp_host, 587, timeout=10) as server:
+                server.ehlo()
                 server.starttls()
+                server.ehlo()
                 server.login(smtp_user, smtp_pass)
                 server.sendmail(email_from, to_email, msg.as_string())
-            logger.info(f"[SUCCESS GMAIL SMTP 587] Verification email delivered to {to_email}")
-            print(f"[SUCCESS GMAIL SMTP 587] Verification email delivered to {to_email}")
+            logger.info(f"[SUCCESS GMAIL SMTP 587] Email delivered to {to_email}")
+            print(f"[SUCCESS GMAIL SMTP 587] Email delivered to {to_email}")
             return True
         except Exception as err_587:
-            print(f"[GMAIL SMTP 587 FAILED] Retrying via SSL 465: {err_587}")
+            logger.error(f"[GMAIL SMTP 587 FAILED] {err_587}. Retrying via SSL 465...")
+            print(f"[GMAIL SMTP 587 FAILED] {err_587}. Retrying via SSL 465...")
 
         # Strategy 2: Gmail SMTP SSL (Port 465 Fallback)
         try:
-            print(f"[GMAIL SMTP 465] Sending to {to_email} via {smtp_host}:465...")
-            with smtplib.SMTP_SSL(smtp_host, 465, timeout=8) as server:
+            logger.info(f"[GMAIL SMTP 465] Connecting to {smtp_host}:465 for {to_email}...")
+            with smtplib.SMTP_SSL(smtp_host, 465, timeout=10) as server:
                 server.login(smtp_user, smtp_pass)
                 server.sendmail(email_from, to_email, msg.as_string())
-            logger.info(f"[SUCCESS GMAIL SMTP 465] Verification email delivered to {to_email}")
-            print(f"[SUCCESS GMAIL SMTP 465] Verification email delivered to {to_email}")
+            logger.info(f"[SUCCESS GMAIL SMTP 465] Email delivered to {to_email}")
+            print(f"[SUCCESS GMAIL SMTP 465] Email delivered to {to_email}")
             return True
         except Exception as err_465:
-            print(f"[CRITICAL GMAIL SMTP ERROR] Delivery failed to {to_email}: {err_465}")
-            return False
+            logger.critical(f"[CRITICAL GMAIL SMTP 465 ERROR] Delivery failed to {to_email}: {err_465}")
+            print(f"[CRITICAL GMAIL SMTP 465 ERROR] Delivery failed to {to_email}: {err_465}")
+
+        return False
 
     @staticmethod
     def send_otp_email(to_email: str, otp_code: str) -> bool:

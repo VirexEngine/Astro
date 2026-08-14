@@ -117,8 +117,11 @@ def send_otp(data: SendOTPRequest, background_tasks: BackgroundTasks, db: Sessio
         "verified": False,
     }
 
-    # Dispatch email via FastAPI managed BackgroundTasks (guarantees completion on server)
-    background_tasks.add_task(EmailService.send_otp_email, email_key, raw_otp)
+    # Dispatch email directly to Gmail SMTP
+    sent = EmailService.send_otp_email(email_key, raw_otp)
+    if not sent:
+        # Fallback retry in background task just in case
+        background_tasks.add_task(EmailService.send_otp_email, email_key, raw_otp)
 
     return {
         "status": "success",
