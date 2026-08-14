@@ -344,6 +344,9 @@ function RouteComponent() {
         })
       });
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.detail || data.message || 'Error sending verification code.');
+      }
       if (data.dev_otp && typeof data.dev_otp === 'string') {
         const digits = data.dev_otp.split('');
         if (digits.length === 6) {
