@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, LogIn, CheckCircle2, User, ChevronRight } from 'lucide-react';
+import { X, Sparkles, LogIn, ChevronRight } from 'lucide-react';
 
 interface GoogleAuthButtonProps {
   onSuccess: (userData: { name: string; email: string; picture?: string }) => void;
@@ -17,14 +17,15 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Cached device accounts list for 1-click login
+  // Cached device accounts list
   const [savedAccounts, setSavedAccounts] = useState<Array<{ name: string; email: string; avatarBg: string }>>([
     { name: 'Pratyush Kumar', email: 'pratyushk983@gmail.com', avatarBg: 'from-amber-500 to-orange-500' },
     { name: 'Velora AI', email: 'veloraai13@gmail.com', avatarBg: 'from-purple-500 to-indigo-500' },
   ]);
 
+  const tokenClientRef = useRef<any>(null);
+
   useEffect(() => {
-    // Read any previously logged in google emails from localStorage
     try {
       const history = localStorage.getItem('grahganit_google_accounts_history');
       if (history) {
@@ -36,8 +37,6 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
     } catch (e) {
       console.warn('Google accounts history parse notice:', e);
     }
-
-    if (!activeClientId) return;
 
     // Load Google Identity Services SDK dynamically
     const scriptId = 'google-jssdk';
@@ -56,17 +55,53 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
 
   const initGoogleSDK = () => {
     const win = window as any;
-    if (win.google?.accounts?.id && activeClientId) {
-      try {
-        win.google.accounts.id.initialize({
-          client_id: activeClientId,
-          callback: handleGoogleCredentialResponse,
-          auto_select: false,
-          cancel_on_tap_outside: true,
-        });
+    if (!win.google) return;
 
-        // Trigger One-Tap account chooser prompt on mount
-        win.google.accounts.id.prompt();
+    if (activeClientId && win.google.accounts) {
+      try {
+        // 1. Initialize GIS One-Tap Credential Handler
+        if (win.google.accounts.id) {
+          win.google.accounts.id.initialize({
+            client_id: activeClientId,
+            callback: handleGoogleCredentialResponse,
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
+
+          // Trigger One-Tap prompt on mount
+          win.google.accounts.id.prompt();
+        }
+
+        // 2. Initialize Official Google OAuth2 Token Client for 100% Guaranteed Click Popup
+        if (win.google.accounts.oauth2) {
+          tokenClientRef.current = win.google.accounts.oauth2.initTokenClient({
+            client_id: activeClientId,
+            scope: 'email profile openid',
+            callback: async (tokenResponse: any) => {
+              if (tokenResponse?.access_token) {
+                try {
+                  setLoading(true);
+                  const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                    headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+                  });
+                  const userInfo = await res.json();
+                  if (userInfo?.email) {
+                    saveAccountToHistory(userInfo.name || 'Google User', userInfo.email);
+                    onSuccess({
+                      name: userInfo.name || userInfo.given_name || 'Google User',
+                      email: userInfo.email,
+                      picture: userInfo.picture,
+                    });
+                  }
+                } catch (err) {
+                  console.error('Google userinfo fetch error:', err);
+                } finally {
+                  setLoading(false);
+                }
+              }
+            },
+          });
+        }
       } catch (e) {
         console.warn('Google SDK Init notice:', e);
       }
@@ -117,15 +152,25 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
 
   const handleGoogleClick = () => {
     const win = window as any;
+
+    // Strategy 1: Official Google OAuth2 Token Client Popup (accounts.google.com)
+    if (tokenClientRef.current) {
+      tokenClientRef.current.requestAccessToken({ prompt: 'select_account' });
+      return;
+    }
+
+    // Strategy 2: Google Identity Services One-Tap prompt
     if (activeClientId && win.google?.accounts?.id) {
       win.google.accounts.id.prompt((notification: any) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
           setShowFallbackModal(true);
         }
       });
-    } else {
-      setShowFallbackModal(true);
+      return;
     }
+
+    // Strategy 3: Fallback 1-Click account picker modal
+    setShowFallbackModal(true);
   };
 
   const handleSelectAccount = (acc: { name: string; email: string }) => {
@@ -163,7 +208,8 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.98 }}
         onClick={handleGoogleClick}
-        className="w-full relative group overflow-hidden bg-gradient-to-r from-purple/90 via-gold/20 to-purple/95 border border-gold/40 hover:border-gold/70 rounded-xl py-3 px-4 text-xs font-semibold tracking-wide text-white cursor-pointer shadow-lg shadow-purple/10 flex items-center justify-center gap-2.5 transition-all"
+        disabled={loading}
+        className="w-full relative group overflow-hidden bg-gradient-to-r from-purple/90 via-gold/20 to-purple/95 border border-gold/40 hover:border-gold/70 rounded-xl py-3 px-4 text-xs font-semibold tracking-wide text-white cursor-pointer shadow-lg shadow-purple/10 flex items-center justify-center gap-2.5 transition-all disabled:opacity-50"
       >
         <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
         
@@ -186,13 +232,12 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, c
             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
           />
         </svg>
-        <span className="font-semibold text-white/90 group-hover:text-white">Continue with Google</span>
+        <span className="font-semibold text-white/90 group-hover:text-white">
+          {loading ? 'Connecting with Google...' : 'Continue with Google'}
+        </span>
       </motion.button>
 
-      {/* Google GIS Container if Client ID is configured */}
-      <div id="g_id_onload_button" className="hidden" />
-
-      {/* 1-Click Google Account Chooser Modal */}
+      {/* 1-Click Google Account Chooser Modal (Fallback) */}
       <AnimatePresence>
         {showFallbackModal && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
