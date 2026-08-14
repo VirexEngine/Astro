@@ -77,7 +77,7 @@ def admin_login(payload: AdminLoginRequest, db: Session = Depends(get_db)):
 @router.get("/stats")
 def get_dashboard_stats(db: Session = Depends(get_db)):
     """Returns top-level overview metrics and diagnostics for the Admin Console."""
-    from backend.models.schemas import ContactMessage, Testimonial
+    from backend.models.schemas import ContactMessage, Testimonial, ConsultationBooking
     
     total_users = db.query(User).count()
     admin_users = db.query(User).filter(User.is_admin == True).count()
@@ -88,6 +88,10 @@ def get_dashboard_stats(db: Session = Depends(get_db)):
     total_messages = db.query(ContactMessage).count()
     total_testimonials = db.query(Testimonial).count()
     approved_testimonials = db.query(Testimonial).filter(Testimonial.is_approved == True).count()
+    
+    total_bookings = db.query(ConsultationBooking).count()
+    paid_bookings = db.query(ConsultationBooking).filter(ConsultationBooking.payment_status == "paid").count()
+    total_revenue = sum(b.amount for b in db.query(ConsultationBooking).filter(ConsultationBooking.payment_status == "paid").all())
 
     # Calculate aggregate article views
     articles = db.query(Article).all()
@@ -104,6 +108,9 @@ def get_dashboard_stats(db: Session = Depends(get_db)):
         "total_messages": total_messages,
         "total_testimonials": total_testimonials,
         "approved_testimonials": approved_testimonials,
+        "total_bookings": total_bookings,
+        "paid_bookings": paid_bookings,
+        "total_revenue": total_revenue,
         "db_engine": "SQLite (grahganit.db)",
         "astrology_engine": "Swiss Ephemeris v2.10 (Active)",
         "server_status": "OPERATIONAL 🟢"
@@ -261,28 +268,105 @@ class ConsultationTierUpdate(BaseModel):
 
 @router.get("/consultation-tiers")
 def list_consultation_tiers(db: Session = Depends(get_db)):
-    """Lists all consultation tiers."""
-    return db.query(ConsultationTier).order_by(ConsultationTier.id.asc()).all()
+    """Lists all consultation tiers from DB (seeding defaults if first run)."""
+    tiers = db.query(ConsultationTier).order_by(ConsultationTier.id.asc()).all()
+    if not tiers:
+        defaults = [
+            {"tier_key": "career", "title": "Career Guidance", "price_inr": 999, "duration": "45 Minutes", "description": "Plot planetary positions governing Tenth house structures.", "is_popular": False},
+            {"tier_key": "marriage", "title": "Marriage & Relationship", "price_inr": 1499, "duration": "60 Minutes", "description": "Review Venus, Moon, and Seventh house marriage dynamics.", "is_popular": False},
+            {"tier_key": "finance", "title": "Business & Finance", "price_inr": 1499, "duration": "60 Minutes", "description": "Identify auspicious periods for financial launches.", "is_popular": False},
+            {"tier_key": "health", "title": "Health & Spiritual Guidance", "price_inr": 999, "duration": "45 Minutes", "description": "Analyze Sixth house transits and design karmic adjustments.", "is_popular": False},
+            {"tier_key": "life", "title": "Complete Life Reading", "price_inr": 2499, "duration": "90 Minutes", "description": "Full, comprehensive birth chart transit briefing.", "is_popular": True},
+        ]
+        for d in defaults:
+            db.add(ConsultationTier(**d))
+        db.commit()
+        tiers = db.query(ConsultationTier).order_by(ConsultationTier.id.asc()).all()
+    return tiers
 
 @router.put("/consultation-tiers/{tier_key}")
 def update_consultation_tier(tier_key: str, payload: ConsultationTierUpdate, db: Session = Depends(get_db)):
-    """Updates a consultation tier by its key (silver, gold, platinum)."""
+    """Updates a consultation tier price, duration, and title in database."""
     tier = db.query(ConsultationTier).filter(ConsultationTier.tier_key == tier_key).first()
     if not tier:
-        tier = ConsultationTier(tier_key=tier_key, title=payload.title, price_inr=payload.price_inr, duration=payload.duration)
+        tier = ConsultationTier(
+            tier_key=tier_key,
+            title=payload.title,
+            price_inr=payload.price_inr,
+            duration=payload.duration,
+            description=payload.description or "",
+            is_popular=payload.is_popular or False,
+            is_active=payload.is_active if payload.is_active is not None else True
+        )
         db.add(tier)
-
-    tier.title = payload.title
-    tier.price_inr = payload.price_inr
-    tier.duration = payload.duration
-    tier.description = payload.description
-    tier.features = payload.features
-    tier.is_popular = payload.is_popular
-    tier.is_active = payload.is_active
+    else:
+        tier.title = payload.title
+        tier.price_inr = payload.price_inr
+        tier.duration = payload.duration
+        if payload.description is not None:
+            tier.description = payload.description
+        if payload.features is not None:
+            tier.features = payload.features
+        if payload.is_popular is not None:
+            tier.is_popular = payload.is_popular
+        if payload.is_active is not None:
+            tier.is_active = payload.is_active
 
     db.commit()
     db.refresh(tier)
     return {"status": "success", "tier": tier}
+
+
+# ─── 7. Paid Consultation Bookings Operations ────────────────────────────────
+class UpdateBookingStatusRequest(BaseModel):
+    payment_status: str
+
+@router.get("/bookings")
+def list_all_bookings(db: Session = Depends(get_db)):
+    """Returns all consultation bookings with seeker details, payment info, and notes."""
+    from backend.models.schemas import ConsultationBooking
+    bookings = db.query(ConsultationBooking).order_by(ConsultationBooking.id.desc()).all()
+    total_paid_revenue = sum(b.amount for b in bookings if b.payment_status == 'paid')
+    return {
+        "status": "success",
+        "count": len(bookings),
+        "total_paid_revenue": total_paid_revenue,
+        "bookings": [
+            {
+                "id": b.id,
+                "order_id": b.order_id,
+                "payment_id": b.payment_id,
+                "seeker_name": b.seeker_name,
+                "seeker_email": b.seeker_email,
+                "seeker_phone": b.seeker_phone or "",
+                "dob": b.dob or "",
+                "tob": b.tob or "",
+                "pob": b.pob or "",
+                "plan_id": b.plan_id,
+                "plan_name": b.plan_name,
+                "amount": b.amount,
+                "currency": b.currency or "INR",
+                "scheduled_date": b.scheduled_date or "",
+                "scheduled_time": b.scheduled_time or "",
+                "notes": b.notes or "",
+                "include_recording": b.include_recording or False,
+                "payment_status": b.payment_status or "created",
+                "created_at": b.created_at.strftime("%Y-%m-%d %H:%M:%S") if b.created_at else None,
+            }
+            for b in bookings
+        ]
+    }
+
+@router.put("/bookings/{booking_id}/status")
+def update_booking_status(booking_id: int, payload: UpdateBookingStatusRequest, db: Session = Depends(get_db)):
+    """Allows admin to update appointment / payment status (paid, scheduled, completed, cancelled)."""
+    from backend.models.schemas import ConsultationBooking
+    booking = db.query(ConsultationBooking).filter(ConsultationBooking.id == booking_id).first()
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found.")
+    booking.payment_status = payload.payment_status
+    db.commit()
+    return {"status": "success", "id": booking.id, "payment_status": booking.payment_status}
 
 
 # ─── 7. Contact Messages Endpoints ───────────────────────────────────────────

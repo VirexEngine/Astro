@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   ShieldCheck, Lock, Mail, Eye, EyeOff, Sparkles, Plus, Edit3, Trash2,
   FileText, Megaphone, Users, RefreshCw, CheckCircle2, AlertCircle,
-  TrendingUp, Eye as ViewIcon, ExternalLink, BookOpen, Star
+  TrendingUp, Eye as ViewIcon, ExternalLink, BookOpen, Star, CreditCard, Calendar, Phone, DollarSign, MessageSquare
 } from 'lucide-react'
 
 export const Route = createFileRoute('/admin')({
@@ -65,7 +65,7 @@ function AdminRouteComponent() {
   const [errorMsg, setErrorMsg] = useState('')
 
   // Dashboard Tab state
-  const [activeTab, setActiveTab] = useState<'overview' | 'messages' | 'testimonials' | 'articles' | 'announcements' | 'consultations' | 'users'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'bookings' | 'consultations' | 'messages' | 'testimonials' | 'articles' | 'announcements' | 'users'>('overview')
 
   // Data state
   const [stats, setStats] = useState<any>(null)
@@ -75,6 +75,10 @@ function AdminRouteComponent() {
   const [messagesList, setMessagesList] = useState<any[]>([])
   const [unreadCount, setUnreadCount] = useState<number>(0)
   const [testimonialsList, setTestimonialsList] = useState<any[]>([])
+  const [bookingsList, setBookingsList] = useState<any[]>([])
+  const [tiersList, setTiersList] = useState<any[]>([])
+  const [bookingStatusFilter, setBookingStatusFilter] = useState<string>('all')
+  const [bookingSearch, setBookingSearch] = useState<string>('')
 
   // Article Modal Form state
   const [articleModalOpen, setArticleModalOpen] = useState(false)
@@ -143,8 +147,35 @@ function AdminRouteComponent() {
       if (resTest.ok) {
         setTestimonialsList(await resTest.json())
       }
+      // 7. Consultation Tiers
+      const resTiers = await fetch('/api/admin/consultation-tiers')
+      if (resTiers.ok) {
+        setTiersList(await resTiers.json())
+      }
+      // 8. Consultation Bookings
+      const resBookings = await fetch('/api/admin/bookings')
+      if (resBookings.ok) {
+        const dataBookings = await resBookings.json()
+        setBookingsList(dataBookings.bookings || [])
+      }
     } catch (err) {
       console.error('Error fetching admin data:', err)
+    }
+  }
+
+  const handleUpdateBookingStatus = async (bookingId: number, newStatus: string) => {
+    try {
+      const res = await fetch(`/api/admin/bookings/${bookingId}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ payment_status: newStatus })
+      })
+      if (res.ok) {
+        setBookingsList(prev => prev.map(b => b.id === bookingId ? { ...b, payment_status: newStatus } : b))
+        fetchDashboardData()
+      }
+    } catch (err) {
+      console.error('Error updating booking status:', err)
     }
   }
 
@@ -483,11 +514,12 @@ function AdminRouteComponent() {
         <div className="flex items-center gap-3 border-b border-white/10 pb-5 mb-8 overflow-x-auto">
           {[
             { id: 'overview', label: 'Dashboard Overview', icon: <TrendingUp className="w-4 h-4" /> },
+            { id: 'bookings', label: 'Paid Bookings', icon: <CreditCard className="w-4 h-4" />, badge: bookingsList.filter(b => b.payment_status === 'paid').length },
+            { id: 'consultations', label: 'Consultation Tiers', icon: <BookOpen className="w-4 h-4" /> },
             { id: 'messages', label: 'Seeker Messages', icon: <Mail className="w-4 h-4" />, badge: unreadCount },
             { id: 'testimonials', label: 'Seeker Testimonials', icon: <Star className="w-4 h-4" />, badge: testimonialsList.filter(t => !t.is_approved).length },
             { id: 'articles', label: 'Articles & Content', icon: <FileText className="w-4 h-4" /> },
             { id: 'announcements', label: 'Header Announcements', icon: <Megaphone className="w-4 h-4" /> },
-            { id: 'consultations', label: 'Consultation Tiers', icon: <BookOpen className="w-4 h-4" /> },
             { id: 'users', label: 'User Directory', icon: <Users className="w-4 h-4" /> },
           ].map((tab) => (
             <button
@@ -739,14 +771,210 @@ function AdminRouteComponent() {
           </div>
         )}
 
-        {/* ── TAB 4: CONSULTATIONS & PRICING ────────────────────────────────── */}
+        {/* ── TAB 2: PAID BOOKINGS & APPOINTMENTS ──────────────────────────── */}
+        {activeTab === 'bookings' && (
+          <div className="space-y-6">
+            {/* Header & Revenue Stats */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-display text-white">Paid Consultations &amp; Appointments</h3>
+                <p className="text-xs text-white/50">Real-time tracker of all seeker appointments, payments, and notes</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="px-4 py-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-bold flex items-center gap-1.5">
+                  <span className="text-sm">₹</span>
+                  <span>Total Paid Revenue: ₹{bookingsList.filter(b => b.payment_status === 'paid').reduce((sum, b) => sum + (b.amount || 0), 0).toLocaleString('en-IN')}</span>
+                </div>
+                <button
+                  onClick={fetchDashboardData}
+                  className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all cursor-pointer"
+                  title="Refresh Bookings"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Filter Bar & Search */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white/[0.02] p-3 rounded-2xl border border-white/10">
+              <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
+                {['all', 'paid', 'scheduled', 'completed', 'created'].map((st) => (
+                  <button
+                    key={st}
+                    onClick={() => setBookingStatusFilter(st)}
+                    className={`px-3 py-1.5 rounded-xl text-[10px] font-mono uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
+                      bookingStatusFilter === st
+                        ? 'bg-gold text-cosmos font-bold shadow-md shadow-gold/20'
+                        : 'bg-white/5 text-white/60 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {st === 'all' ? `All (${bookingsList.length})` : `${st} (${bookingsList.filter(b => b.payment_status === st).length})`}
+                  </button>
+                ))}
+              </div>
+
+              <input
+                type="text"
+                placeholder="Search seeker name, email, phone, or txn..."
+                value={bookingSearch}
+                onChange={(e) => setBookingSearch(e.target.value)}
+                className="w-full sm:w-64 bg-white/5 border border-white/10 focus:border-gold/40 rounded-xl px-3 py-1.5 text-xs text-white placeholder-white/30 outline-none"
+              />
+            </div>
+
+            {/* Bookings Table */}
+            <div className="glass-strong rounded-2xl border border-white/10 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-white/5 text-white/60 font-mono text-[10px] uppercase border-b border-white/10">
+                    <tr>
+                      <th className="p-4">Seeker Information</th>
+                      <th className="p-4">Phone / WhatsApp</th>
+                      <th className="p-4">Package &amp; Price</th>
+                      <th className="p-4">Appointment Slot</th>
+                      <th className="p-4">Seeker Question / Message</th>
+                      <th className="p-4">Payment &amp; Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-white/80">
+                    {bookingsList
+                      .filter((b) => {
+                        if (bookingStatusFilter !== 'all' && b.payment_status !== bookingStatusFilter) return false
+                        if (bookingSearch.trim()) {
+                          const q = bookingSearch.toLowerCase()
+                          const matchName = (b.seeker_name || '').toLowerCase().includes(q)
+                          const matchEmail = (b.seeker_email || '').toLowerCase().includes(q)
+                          const matchPhone = (b.seeker_phone || '').toLowerCase().includes(q)
+                          const matchTxn = (b.payment_id || b.order_id || '').toLowerCase().includes(q)
+                          const matchPlan = (b.plan_name || '').toLowerCase().includes(q)
+                          return matchName || matchEmail || matchPhone || matchTxn || matchPlan
+                        }
+                        return true
+                      })
+                      .map((b) => {
+                        const cleanPhone = (b.seeker_phone || '').replace(/[^0-9]/g, '')
+                        const waNumber = cleanPhone.startsWith('91') ? cleanPhone : `91${cleanPhone}`
+
+                        return (
+                          <tr key={b.id} className="hover:bg-white/5 transition-colors">
+                            <td className="p-4">
+                              <p className="font-semibold text-white">{b.seeker_name}</p>
+                              <a href={`mailto:${b.seeker_email}`} className="text-xs text-white/50 hover:text-gold transition-colors font-mono">
+                                {b.seeker_email}
+                              </a>
+                              {b.dob && (
+                                <p className="text-[10px] text-white/40 font-mono mt-0.5">
+                                  DOB: {b.dob} {b.tob ? `@ ${b.tob}` : ''} {b.pob ? `· ${b.pob}` : ''}
+                                </p>
+                              )}
+                            </td>
+
+                            <td className="p-4 font-mono">
+                              {b.seeker_phone ? (
+                                <div className="space-y-1">
+                                  <span className="text-white text-xs">{b.seeker_phone}</span>
+                                  {cleanPhone.length >= 10 && (
+                                    <a
+                                      href={`https://wa.me/${waNumber}?text=${encodeURIComponent(`Hello ${b.seeker_name}, greetings from GrahGanit! Regarding your ${b.plan_name} consultation scheduled for ${b.scheduled_date || 'your chosen date'}...`)}`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="inline-flex items-center gap-1 text-[10px] text-emerald-400 hover:text-emerald-300 transition-colors bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full"
+                                    >
+                                      <span>💬 WhatsApp Chat</span>
+                                      <ExternalLink className="w-2.5 h-2.5" />
+                                    </a>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className="text-white/30 text-[10px]">—</span>
+                              )}
+                            </td>
+
+                            <td className="p-4">
+                              <span className="font-semibold text-gold">{b.plan_name}</span>
+                              <p className="text-base font-bold font-mono text-white mt-0.5">₹{b.amount}</p>
+                              {b.include_recording && (
+                                <span className="text-[9px] font-mono text-purple-300 bg-purple-500/10 border border-purple-500/20 px-1.5 py-0.5 rounded">
+                                  + Recording Included
+                                </span>
+                              )}
+                            </td>
+
+                            <td className="p-4 font-mono">
+                              <p className="text-white font-medium">{b.scheduled_date || 'Date Pending'}</p>
+                              <p className="text-xs text-amber-400/80">{b.scheduled_time || '10:30 AM'}</p>
+                            </td>
+
+                            <td className="p-4 max-w-xs">
+                              {b.notes ? (
+                                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-white/80 font-sans leading-relaxed">
+                                  {b.notes}
+                                </div>
+                              ) : (
+                                <span className="text-white/30 italic text-[11px]">No specific message provided.</span>
+                              )}
+                            </td>
+
+                            <td className="p-4">
+                              <div className="space-y-1.5">
+                                <select
+                                  value={b.payment_status}
+                                  onChange={(e) => handleUpdateBookingStatus(b.id, e.target.value)}
+                                  className={`text-[10px] font-mono font-bold uppercase rounded-xl px-2.5 py-1 border outline-none cursor-pointer ${
+                                    b.payment_status === 'paid'
+                                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                                      : b.payment_status === 'scheduled'
+                                      ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+                                      : b.payment_status === 'completed'
+                                      ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+                                      : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                                  }`}
+                                >
+                                  <option value="paid" className="bg-cosmos text-white">Paid (Confirmed)</option>
+                                  <option value="scheduled" className="bg-cosmos text-white">Scheduled</option>
+                                  <option value="completed" className="bg-cosmos text-white">Completed</option>
+                                  <option value="created" className="bg-cosmos text-white">Pending Payment</option>
+                                  <option value="cancelled" className="bg-cosmos text-white">Cancelled</option>
+                                </select>
+
+                                {b.payment_id && (
+                                  <p className="text-[9px] font-mono text-white/40 block truncate max-w-[130px]" title={b.payment_id}>
+                                    Txn: {b.payment_id}
+                                  </p>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                  </tbody>
+                </table>
+                {bookingsList.length === 0 && (
+                  <div className="p-12 text-center text-white/40">
+                    <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-40" />
+                    <p className="text-sm">No consultation bookings recorded yet.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── TAB 3: CONSULTATIONS & PRICING ────────────────────────────────── */}
         {activeTab === 'consultations' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-display text-white">Consultation Packages &amp; Pricing</h3>
-                <p className="text-xs text-white/50">Update consultation tier prices, durations, and features</p>
+                <p className="text-xs text-white/50">Live pricing engine · Changes update immediately across the entire website &amp; payment gateway</p>
               </div>
+              <button
+                onClick={fetchDashboardData}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Sync Live Prices</span>
+              </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -756,52 +984,75 @@ function AdminRouteComponent() {
                 { key: 'finance', title: 'Business & Finance', defaultPrice: 1499, duration: '60 Minutes', badge: 'WEALTH & LAUNCH' },
                 { key: 'health', title: 'Health & Spiritual Guidance', defaultPrice: 999, duration: '45 Minutes', badge: 'WELLNESS & MANTRAS' },
                 { key: 'life', title: 'Complete Life Reading', defaultPrice: 2499, duration: '90 Minutes', badge: 'MOST POPULAR' },
-              ].map((tier) => (
-                <div key={tier.key} className="glass-strong p-6 rounded-2xl border border-white/10 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full bg-gold/10 text-gold text-[10px] font-mono border border-gold/20 font-bold">
-                      {tier.badge}
-                    </span>
-                    <span className="text-xs text-white/40 font-mono">Key: {tier.key}</span>
-                  </div>
+              ].map((tier) => {
+                const dbTier = tiersList.find((t: any) => t.tier_key === tier.key)
+                const currentPrice = dbTier ? dbTier.price_inr : tier.defaultPrice
+                const currentDuration = dbTier ? dbTier.duration : tier.duration
 
-                  <div>
-                    <h4 className="text-base font-display font-medium text-white">{tier.title}</h4>
-                    <p className="text-2xl font-bold font-mono text-gold mt-1">₹{tier.defaultPrice}</p>
-                    <p className="text-xs text-white/50">{tier.duration}</p>
-                  </div>
+                return (
+                  <div key={tier.key} className="glass-strong p-6 rounded-2xl border border-white/10 space-y-4 relative overflow-hidden">
+                    <div className="flex items-center justify-between">
+                      <span className="px-2.5 py-0.5 rounded-full bg-gold/10 text-gold text-[10px] font-mono border border-gold/20 font-bold">
+                        {tier.badge}
+                      </span>
+                      <span className="text-xs text-white/40 font-mono">Key: {tier.key}</span>
+                    </div>
 
-                  <div className="pt-2 border-t border-white/5 text-xs text-white/70 space-y-1 font-mono">
-                    <p>• Live 1-on-1 Astrologer Session</p>
-                    <p>• Birth Chart (Kundali) Analysis</p>
-                    <p>• Custom Remedies &amp; Q&amp;A</p>
-                  </div>
+                    <div>
+                      <h4 className="text-base font-display font-medium text-white">{tier.title}</h4>
+                      <p className="text-3xl font-bold font-mono text-gold mt-1">₹{currentPrice}</p>
+                      <p className="text-xs text-white/50">{currentDuration}</p>
+                    </div>
 
-                  <button
-                    onClick={() => {
-                      const newPrice = prompt(`Enter new price in INR for ${tier.title}:`, tier.defaultPrice.toString())
-                      if (newPrice && !isNaN(Number(newPrice))) {
-                        fetch(`/api/admin/consultation-tiers/${tier.key}`, {
-                          method: 'PUT',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            title: tier.title,
-                            price_inr: Number(newPrice),
-                            duration: tier.duration,
-                            is_active: true
+                    <div className="pt-2 border-t border-white/5 text-xs text-white/70 space-y-1 font-mono">
+                      <p>• Live 1-on-1 Astrologer Session</p>
+                      <p>• Birth Chart (Kundali) Analysis</p>
+                      <p>• Custom Remedies &amp; Q&amp;A</p>
+                    </div>
+
+                    <button
+                      onClick={async () => {
+                        const newPriceStr = prompt(`Enter new price in INR for ${tier.title}:`, currentPrice.toString())
+                        if (newPriceStr && !isNaN(Number(newPriceStr))) {
+                          const newPrice = Number(newPriceStr)
+                          // 1. Immediately update UI state
+                          setTiersList((prev: any[]) => {
+                            const exists = prev.some((t) => t.tier_key === tier.key)
+                            if (exists) {
+                              return prev.map((t) => (t.tier_key === tier.key ? { ...t, price_inr: newPrice } : t))
+                            }
+                            return [...prev, { tier_key: tier.key, title: tier.title, price_inr: newPrice, duration: tier.duration }]
                           })
-                        }).then(() => {
-                          alert(`Price updated to ₹${newPrice} successfully!`);
-                          fetchDashboardData();
-                        })
-                      }
-                    }}
-                    className="w-full bg-gold/10 hover:bg-gold/20 border border-gold/30 text-gold font-semibold text-xs py-2 rounded-xl transition-all cursor-pointer"
-                  >
-                    Edit Package Price
-                  </button>
-                </div>
-              ))}
+
+                          // 2. Persist to DB
+                          try {
+                            const res = await fetch(`/api/admin/consultation-tiers/${tier.key}`, {
+                              method: 'PUT',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                title: tier.title,
+                                price_inr: newPrice,
+                                duration: currentDuration,
+                                is_active: true,
+                              }),
+                            })
+                            if (res.ok) {
+                              alert(`✅ ${tier.title} price updated to ₹${newPrice} successfully!`)
+                              fetchDashboardData()
+                            }
+                          } catch (e) {
+                            console.error('Error saving tier price:', e)
+                          }
+                        }
+                      }}
+                      className="w-full bg-gold/10 hover:bg-gold/20 border border-gold/30 text-gold font-semibold text-xs py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>Edit Package Price</span>
+                    </button>
+                  </div>
+                )
+              })}
             </div>
           </div>
         )}

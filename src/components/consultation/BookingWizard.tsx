@@ -19,10 +19,12 @@ const QUICK_TAGS = ['Career', 'Marriage', 'Education', 'Health', 'Business', 'Fa
 
 export const BookingWizard: React.FC = () => {
   const [step, setStep] = useState(1);
+  const [plansList, setPlansList] = useState<Plan[]>(PLANS);
   const [selectedService, setSelectedService] = useState<Plan>(PLANS[4]); // Default to Complete Life Reading
+  const [bookedSlotsMap, setBookedSlotsMap] = useState<Record<string, number>>({});
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  
+
   // Dynamic Real-Time Calendar Calculations
   const today = new Date();
   const currentYear = today.getFullYear();
@@ -42,6 +44,50 @@ export const BookingWizard: React.FC = () => {
   const formattedSelectedDate = selectedDate
     ? `${shortMonthName} ${selectedDate}, ${currentYear}`
     : `${shortMonthName} ${Math.min(currentDay + 1, daysInMonth)}, ${currentYear}`;
+
+  // Automatically fetch live pricing and booked slots on mount
+  useEffect(() => {
+    // 1. Fetch dynamic consultation tiers pricing
+    fetch('/api/admin/consultation-tiers')
+      .then((res) => res.json())
+      .then((tiers) => {
+        if (Array.isArray(tiers) && tiers.length > 0) {
+          setPlansList((prev) =>
+            prev.map((p) => {
+              const matched = tiers.find((t: any) => t.tier_key === p.id);
+              if (matched) {
+                return {
+                  ...p,
+                  price: matched.price_inr ?? p.price,
+                  duration: matched.duration ?? p.duration,
+                  name: matched.title ?? p.name,
+                };
+              }
+              return p;
+            })
+          );
+        }
+      })
+      .catch((err) => console.warn('Tiers pricing fetch notice:', err));
+
+    // 2. Fetch live booked slots for calendar capacity
+    fetch('/api/payments/availability')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.booked_slots) {
+          setBookedSlotsMap(data.booked_slots);
+        }
+      })
+      .catch((err) => console.warn('Availability fetch notice:', err));
+  }, []);
+
+  // Sync selectedService when plansList updates
+  useEffect(() => {
+    setSelectedService((prev) => {
+      const matched = plansList.find((p) => p.id === prev.id);
+      return matched || prev;
+    });
+  }, [plansList]);
 
   // Automatically lock out past dates and default to next available future day
   useEffect(() => {
@@ -315,11 +361,23 @@ export const BookingWizard: React.FC = () => {
     setBookingConfirmed(true);
   };
 
-  // Mock slot data for calendar days
+  // Real-time slot capacity calculations from database
   const getDayAvailability = (day: number) => {
-    if (day % 7 === 0) return { status: 'booked', label: 'Fully Booked', color: 'text-red-400 bg-red-400/10' };
-    if (day % 3 === 0) return { status: 'limited', label: '3 Slots Left', color: 'text-yellow-400 bg-yellow-400/10' };
-    return { status: 'available', label: '6 Slots Left', color: 'text-emerald-400 bg-emerald-400/10' };
+    const dateKey = `${shortMonthName} ${day}, ${currentYear}`;
+    const bookedCount = bookedSlotsMap[dateKey] || 0;
+    const maxSlots = 3;
+    const remaining = Math.max(0, maxSlots - bookedCount);
+
+    if (remaining === 0) {
+      return { status: 'booked', remaining: 0, label: 'Fully Booked', color: 'text-red-400 bg-red-400/10' };
+    }
+    if (remaining === 1) {
+      return { status: 'limited', remaining: 1, label: '1 Slot Left', color: 'text-amber-400 bg-amber-400/10' };
+    }
+    if (remaining === 2) {
+      return { status: 'limited', remaining: 2, label: '2 Slots Left', color: 'text-amber-400 bg-amber-400/10' };
+    }
+    return { status: 'available', remaining: 3, label: '3 Slots Left', color: 'text-emerald-400 bg-emerald-400/10' };
   };
 
   return (
@@ -439,7 +497,7 @@ export const BookingWizard: React.FC = () => {
 
                   {/* Google-style Comparison Package Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {PLANS.map((plan) => {
+                    {plansList.map((plan) => {
                       const isSelected = selectedService.id === plan.id;
                       const purchasedBooking = userBookings.find(
                         (b) => b.plan_id === plan.id || b.plan_name === plan.name
@@ -621,7 +679,7 @@ export const BookingWizard: React.FC = () => {
                             <span className={`text-[7px] font-mono leading-none self-end scale-90 origin-right ${
                               avail.status === 'limited' ? 'text-amber-400' : 'text-emerald-400'
                             }`}>
-                              {avail.status === 'limited' ? '3 left' : '6 left'}
+                              {avail.remaining} left
                             </span>
                           ) : (
                             <span className="text-[7px] font-mono text-red-400/60 self-end">Full</span>

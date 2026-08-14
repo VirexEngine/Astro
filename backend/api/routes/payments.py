@@ -212,3 +212,28 @@ def list_bookings(db: Session = Depends(get_db)):
     """Returns all confirmed and pending consultation bookings for the Admin panel."""
     bookings = db.query(ConsultationBooking).order_by(ConsultationBooking.created_at.desc()).all()
     return bookings
+
+
+# ─── 4. Live Calendar Slot Availability ───────────────────────────────────────
+
+@router.get("/availability")
+def get_slot_availability(db: Session = Depends(get_db)):
+    """
+    Returns booked consultation counts grouped by scheduled date.
+    Allows frontend booking calendar to dynamically decrement remaining daily slots.
+    """
+    bookings = db.query(ConsultationBooking).filter(
+        ConsultationBooking.payment_status.in_(["paid", "scheduled"])
+    ).all()
+
+    booked_counts = {}
+    for b in bookings:
+        if b.scheduled_date:
+            date_key = b.scheduled_date.strip()
+            booked_counts[date_key] = booked_counts.get(date_key, 0) + 1
+
+    return {
+        "status": "success",
+        "max_slots_per_day": 3,
+        "booked_slots": booked_counts
+    }
