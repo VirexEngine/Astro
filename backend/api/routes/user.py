@@ -117,9 +117,8 @@ def send_otp(data: SendOTPRequest, background_tasks: BackgroundTasks, db: Sessio
         "verified": False,
     }
 
-    # Dispatch email sending in non-blocking daemon thread for instant 0.05s API response
-    import threading
-    threading.Thread(target=EmailService.send_otp_email, args=(email_key, raw_otp), daemon=True).start()
+    # Dispatch email via FastAPI managed BackgroundTasks (guarantees completion on server)
+    background_tasks.add_task(EmailService.send_otp_email, email_key, raw_otp)
 
     return {
         "status": "success",
